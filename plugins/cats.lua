@@ -7,7 +7,7 @@
 
 local cats = {}
 local mattata = require('mattata')
-local http = require('socket.http')
+local http = require('ssl.https')
 local json = require('dkjson')
 
 function cats:init(configuration)
@@ -17,8 +17,8 @@ function cats:init(configuration)
 end
 
 function cats.on_inline_query(_, inline_query, configuration, language)
-    local str, res = http.request('http://thecatapi.com/api/images/get?format=html&type=jpg&api_key=' .. configuration.keys.cats)
-    str = str:match('%<img src%=%"(.-)%"%>')
+    local str, res = http.request('https://api.thecatapi.com/v1/images/search')
+    str = str:match('%"url%":%"(.-)%"')
     if res ~= 200 then
         return
     end
@@ -32,11 +32,11 @@ function cats.on_inline_query(_, inline_query, configuration, language)
 end
 
 function cats.on_message(_, message, configuration, language)
-    local str, res = http.request('http://thecatapi.com/api/images/get?format=html&type=jpg&api_key=' .. configuration.keys.cats)
+    local str, res = http.request('https://api.thecatapi.com/v1/images/search')
     if res ~= 200 then
-        return mattata.send_reply(message, language.errors.connection)
+	 return mattata.send_reply(message, language.errors.connection)
     end
-    local photo = str:match('%<img src%=%"(.-)%"%>')
+    local photo =  str:match('%"url%":%"(.-)%"')
     if not photo then
         return mattata.send_reply(message, language.errors.unknown)
     end
