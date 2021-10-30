@@ -6,6 +6,7 @@
 local todo = {}
 local mattata = require('mattata')
 local redis = require('libs.redis')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function todo:init()
     todo.commands = mattata.commands(self.info.username):command('todo').table

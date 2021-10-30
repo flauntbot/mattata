@@ -8,6 +8,7 @@ local mattata = require('mattata')
 local json = require('dkjson')
 local redis = require('libs.redis')
 local configuration = require('configuration')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function plugins:init()
     plugins.commands = mattata.commands(self.info.username):command('plugins').table

@@ -5,6 +5,7 @@
 
 local copypasta = {}
 local mattata = require('mattata')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function copypasta:init(configuration)
     copypasta.commands = mattata.commands(self.info.username):command('copypasta'):command(utf8.char(128514)).table

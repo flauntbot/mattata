@@ -5,6 +5,7 @@
 
 local responses = {}
 local mattata = require('mattata')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function responses:init()
     responses.all = {

@@ -5,6 +5,7 @@
 
 local dice = {}
 local mattata = require('mattata')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function dice:init()
     dice.commands = mattata.commands(self.info.username):command('dice'):command('roll').table

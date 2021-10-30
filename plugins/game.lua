@@ -8,6 +8,7 @@ local mattata = require('mattata')
 local socket = require('socket')
 local json = require('dkjson')
 local redis = require('libs.redis')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function game:init()
     game.commands = mattata.commands(self.info.username):command('game'):command('tictactoe').table

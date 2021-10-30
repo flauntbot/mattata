@@ -5,6 +5,7 @@
 
 local help = {}
 local mattata = require('mattata')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function help:init(configuration)
     help.commands = mattata.commands(self.info.username):command('help'):command('start').table
@@ -245,13 +246,13 @@ function help:on_callback_query(callback_query, message, _, language)
             mattata.inline_keyboard():row(
                 mattata.row():url_button(
                     language['help']['13'],
-                    'https://t.me/mattataDev'
+                    'https://t.me/flaunt_and_dither'
                 ):url_button(
                     language['help']['14'],
-                    'https://t.me/mattata'
+                    'https://t.me/mafflebot'
                 ):url_button(
                     language['help']['15'],
-                    'https://t.me/mattataSupport'
+                    'https://t.me/flaunt_and_dither'
                 )
             ):row(
                 mattata.row():url_button(
@@ -262,18 +263,12 @@ function help:on_callback_query(callback_query, message, _, language)
                     'https://github.com/wrxck/mattata'
                 ):url_button(
                     language['help']['18'],
-                    'https://paypal.me/wrxck'
+                    'https://buy.stripe.com/cN29COdJW1wU2t27su'
                 )
             ):row(
                 mattata.row():url_button(
                     language['help']['19'],
-                    'https://t.me/storebot?start=mattatabot'
-                ):url_button(
-                    language['help']['20'],
-                    'https://t.me/mattataLog'
-                ):url_button(
-                    'Twitter',
-                    'https://twitter.com/intent/user?screen_name=matt__hesketh'
+                    'https://t.me/storebot?start=mafflebot'
                 )
             ):row(
                 mattata.row():callback_data_button(

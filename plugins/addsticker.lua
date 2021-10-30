@@ -10,6 +10,7 @@ local ltn12 = require('ltn12')
 local mime = require('mime')
 local json = require('dkjson')
 local redis = require('libs.redis')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function addsticker:init()
     addsticker.commands = mattata.commands(self.info.username):command('addsticker'):command('getsticker').table
@@ -17,7 +18,8 @@ function addsticker:init()
 end
 
 function addsticker.delete_file(file)
-    os.execute('rm ' .. file .. ' && rm output.png')
+    os.execute('rm ' .. file)
+    os.execute('rm output.png')
     return true
 end
 
@@ -139,12 +141,15 @@ function addsticker:on_message(message, configuration, language)
             return mattata.send_reply(message, language.errors.generic)
         end
         file_name = file.result.file_path
-        local file_path = string.format('https://api.telegram.org/file/bot%s/%s', configuration.bot_token, file_name)
-        file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.bot_directory)
-        if not file then
-            return false
+        if not configuration.local_mode then
+            file_name = file.result.file_path
+            local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
+            file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.bot_directory)
+            if not file then
+                return false
+            end
+            file_name = file_name:match('/(.-)$')
         end
-        file_name = file_name:match('/(.-)$')
     else
         file_name = 'output.webp'
         file = configuration.bot_directory .. '/output.webp'
@@ -154,7 +159,10 @@ function addsticker:on_message(message, configuration, language)
     local output_file = configuration.bot_directory .. '/output.png'
     if message.text:match('^[/!#]getsticker') then
         mattata.send_document(message.chat.id, output_file)
-        return addsticker.delete_file(file)
+        if type(file) == 'string' then
+            return addsticker.delete_file(file)
+        end
+        return true
     end
     local set_name = string.format('U%s_by_%s', message.from.id, self.info.username:lower())
     local set_title = message.from.original_name or message.from.first_name
@@ -169,7 +177,9 @@ function addsticker:on_message(message, configuration, language)
             redis:hset('user:' .. message.from.id .. ':info', 'sticker_packs', amount)
         else
             local success = mattata.add_sticker_to_set(message.from.id, set_name, output_file, utf8.char(128045))
-            addsticker.delete_file(file)
+            if type(file) == 'string' then
+                addsticker.delete_file(file)
+            end
             if not success then
                 return mattata.send_reply(message, language.errors.generic)
             end
@@ -178,13 +188,17 @@ function addsticker:on_message(message, configuration, language)
     end
     if input then
         if input:len() > 64 then
-            addsticker.delete_file(file)
+            if type(file) == 'string' then
+                addsticker.delete_file(file)
+            end
             return mattata.send_reply(message, 'The sticker pack title cannot be longer than 64 characters in length!')
         end
         set_title = input
     end
     local success = mattata.create_new_sticker_set(message.from.id, set_name, set_title, output_file, utf8.char(128045))
-    addsticker.delete_file(file)
+    if type(file) == 'string' then
+        addsticker.delete_file(file)
+    end
     if not success then
         return mattata.send_reply(message, language.errors.generic)
     end

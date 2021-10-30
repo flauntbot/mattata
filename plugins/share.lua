@@ -6,6 +6,7 @@
 local share = {}
 local mattata = require('mattata')
 local url = require('socket.url')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function share:init()
     share.commands = mattata.commands(self.info.username):command('share').table

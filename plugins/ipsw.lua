@@ -8,6 +8,7 @@ local mattata = require('mattata')
 local https = require('ssl.https')
 local url = require('socket.url')
 local json = require('dkjson')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function ipsw:init()
     ipsw.commands = mattata.commands(self.info.username):command('ipsw').table

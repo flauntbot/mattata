@@ -20,12 +20,12 @@ function anticrypto:on_new_message(message, configuration)
         return false
     end
     local file_name = file.result.file_path
-    local file_path = string.format('https://api.telegram.org/file/bot%s/%s', configuration.bot_token, file_name)
+    local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
     file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.download_location)
     if not file then
         return false
     end
-    local command = string.format('tesseract --tessdata-dir /home/matt/matticatebot/tesseract/ --oem 3 %s stdout', file)
+    local command = string.format('tesseract --tessdata-dir ' .. configuration.files_path .. '/tesseract/ --oem 3 %s stdout', file)
     local exec = io.popen(command)
     local contents = exec:read('*all')
     exec:close()
