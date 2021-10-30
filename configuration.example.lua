@@ -16,23 +16,26 @@
 ]]
 
 local configuration = { -- Rename this file to configuration.lua for the bot to work!
-    ['bot_token'] = '', -- In order for the bot to actually work, you MUST insert the Telegram
+    ['bot_token'] = 'xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- In order for the bot to actually work, you MUST insert the Telegram
     -- bot API token you received from @BotFather.
+    --['endpoint'] = 'https://xxxxxxxx-xxx-xxx.xxxxx-xx.xxx/bot', -- advanced: custom bot api server
+    ['files_path'] = '/tmp/mattata', -- filesystem path where to save downloaded files
+    --['local_mode'] = true, -- advanced: SOMETIMES a custom api endpoint requires this
     ['connected_message'] = 'Connected to the Telegram bot API!', -- The message to print when the bot is connected to the Telegram bot API
-    ['version'] = '1.5', -- the version of mattata, don't change this!
+    ['version'] = '1.5.1', -- the version of mattata, don't change this!
     -- The following two tokens will require you to have setup payments with @BotFather, and
     -- a Stripe account with @stripe!
-    ['stripe_live_token'] = '', -- Payment token you receive from @BotFather.
-    ['stripe_test_token'] = '', -- Test payment token you receive from @BotFather.
+    ['stripe_live_token'] = 'xxxxxxxxx:xxxx:xxxxxxxxxxxxxxxx', -- Payment token you receive from @BotFather.
+    ['stripe_test_token'] = 'xxxxxxxxx:xxxx:xxxxxxxxxxxxxxxx', -- Test payment token you receive from @BotFather.
     ['admins'] = {  -- Here you need to specify the numerical ID of the users who shall have
-    -- FULL control over the bot, this includes access to server files via the lua and shell plugins.
-        221714512
+        -- FULL control over the bot, this includes access to server files via the lua and shell plugins.
+        136958297
     },
     ['allowlist_plugin_exceptions'] = { -- An array of plugins that will still be used for allowlisted users.
         'antispam'
     },
     ['beta_plugins'] = { -- An array of plugins that only the configured bot admins are able to use.
-        'array_of_beta_plugins'
+
     },
     ['permanent_plugins'] = { -- An array of plugins that can't be disabled with /plugins.
         'plugins',
@@ -45,76 +48,60 @@ local configuration = { -- Rename this file to configuration.lua for the bot to 
         ['limit'] = 100 -- message limit for api.get_updates() - must be between 1-100
     },
     ['language'] = 'en', -- The two character locale to set your default language to.
-    ['log_chat'] = nil, -- This needs to be the numerical identifier of the chat you wish to log
+    ['log_chat'] = 136958297, -- This needs to be the numerical identifier of the chat you wish to log
     -- errors into. If it's not a private chat it should begin with a '-' symbol.
     ['log_admin_actions'] = true, -- Should administrative actions be logged? [true/false]
     ['log_channel'] = nil, -- This needs to be the numerical identifier of the channel you wish
     -- to log administrative actions in by default. It should begin with a '-' symbol.
-    ['bug_reports_chat'] = nil, -- This needs to be the numerical identifier of the chat you wish to send
+    ['bug_reports_chat'] = 136958297, -- This needs to be the numerical identifier of the chat you wish to send
     -- bug reports into. If it's not a private chat it should begin with a '-' symbol.
-    ['counter_channel'] = nil, -- This needs to be the numerical identifier of the channel you wish
-    -- to forward messages into, for use with the /counter command. It should begin with a '-' symbol.
-    -- The following directory values should NOT have a "/" at the end!
-    ['bot_directory'] = '/path/to/bot',
-    ['download_location'] = '/path/to/downloads', -- The location to save all downloaded media to.
-    ['fonts_directory'] = '/path/to/fonts', -- The location where fonts are stored for CAPTCHAs
+    ['bot_directory'] = '/var/bots/mafflebot',
+    ['download_location'] = '/var/bots/mafflebot/downloads', -- The location to save all downloaded media to.
+    ['fonts_directory'] = '/usr/share/fonts/truetype/freefont', -- The location where fonts are stored for CAPTCHAs
     ['debug'] = true, -- Turn this on to print EVEN MORE information to the terminal.
+    ['verbose'] = false, -- Debugging of underlying telegram library
     ['redis'] = { -- Configurable options for connecting the bot to redis. Do NOT modify
-    -- these settings if you don't know what you're doing!
+        -- these settings if you don't know what you're doing!
         ['host'] = '127.0.0.1',
         ['port'] = 6379,
         ['password'] = nil,
         ['db'] = 2
     },
     ['keys'] = { -- API keys needed for the full functionality of several plugins.
-        ['cats'] = '', -- http://thecatapi.com/api-key-registration.html
+        ['cats'] = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', -- https://thecatapi.com/api-key-registration.html
         ['translate'] = '', -- https://tech.yandex.com/keys/get/?service=trnsl
-        ['lyrics'] = '', -- https://developer.musixmatch.com/admin/applications
-        ['lastfm'] = '', -- http://www.last.fm/api/account/create
-        ['weather'] = '', -- https://darksky.net/dev/register
-        ['youtube'] = '', -- https://console.developers.google.com/apis
-        ['maps'] = '', -- https://console.cloud.google.com/google/maps-apis
-        ['location'] = '', -- https://opencagedata.com/api
-        ['bing'] = '', -- https://datamarket.azure.com/account/keys
-        ['flickr'] = '', -- https://www.flickr.com/services/apps/create/noncommercial/
+        ['lastfm'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://www.last.fm/api/accounts
+        ['weather'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://home.openweathermap.org/api_keys
+        ['youtube'] = 'xxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxxx', -- https://console.developers.google.com/apis
+        ['maps'] = 'xxxxxxxxxxxxxx-xxxxxxxxxxxxx_xxxxxxxxxx', -- https://console.cloud.google.com/google/maps-apis
+        ['location'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://opencagedata.com/api
+        ['bing'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://datamarket.azure.com/account/keys
+        ['flickr'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://www.flickr.com/services/apps/create/noncommercial/
         ['news'] = '', -- https://newsapi.org/
-        ['twitch'] = '', -- https://twitchapps.com/tmi/
-        ['pastebin'] = '', -- https://pastebin.com/api
         ['dictionary'] = {  -- https://developer.oxforddictionaries.com/
-            ['id'] = '',
-            ['key'] = ''
+            ['id'] = 'xxxxxxxx',
+            ['key'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
         },
-        ['adfly'] = { -- https://ay.gy/publisher/tools#tools-api
-            ['api_key'] = '',
-            ['user_id'] = '',
-            ['secret_key'] = ''
-        },
-        ['pasteee'] = '', -- https://paste.ee/
-        ['google'] = { -- https://console.developers.google.com/apis
-            ['api_key'] = '',
-            ['cse_key'] = ''
-        },
-        ['steam'] = '', -- https://steamcommunity.com/dev/apikey
-        ['spotify'] = { -- https://developer.spotify.com/my-applications/#!/applications/create
-            ['client_id'] = '',
-            ['client_secret'] = '',
-            ['redirect_uri'] = 'https://t.me/mattatabot?start='
-        },
-        ['twitter'] = { -- https://apps.twitter.com/app/new
-            ['consumer_key'] = '',
-            ['consumer_secret'] = ''
+        ['steam'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', -- https://steamcommunity.com/dev/apikey
+        ['spotify'] = { -- https://developer.spotify.com/dashboard
+            ['client_id'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            ['client_secret'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            ['redirect_uri'] = 'https://t.me/mafflebot?start='
         },
         ['imgur'] = { -- https://api.imgur.com/oauth2/addclient
-            ['client_id'] = '',
-            ['client_secret'] = ''
+            ['client_id'] = 'xxxxxxxxxxxxxxx',
+            ['client_secret'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
         },
-        ['spamwatch'] = '', -- https://t.me/SpamWatchSupport
-        ['wolframalpha'] = '', -- https://developer.wolframalpha.com/portal/myapps/
+        ['imgbun'] = { -- https://imgbun.com/sign-up
+            -- if i was good at this i would just use imagemagick or similar
+            ['key'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        },
+        ['spamwatch'] = 'xxxxxxxxxx~x_xxxxxxxxxxxxxxxxxxxxxxxxxx~xxxxxxxxxxxxxxxxxxxxxxxx', -- https://t.me/SpamWatchSupport
         ['movies'] = {
-            ['omdb'] = '', -- http://www.omdbapi.com/apikey.aspx
-            ['poster'] = '' -- https://www.myapifilms.com/token.do
+            ['omdb'] = 'xxxxxxxx', -- http://www.omdbapi.com/apikey.aspx
+            ['poster'] = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -- https://www.myapifilms.com/token.do
         },
-        ['transcribe'] = '' -- https://wit.ai/v2
+        ['transcribe'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' -- https://wit.ai/v2
     },
     ['errors'] = { -- Messages to provide a more user-friendly approach to errors.
         ['connection'] = 'Connection error.',
@@ -156,6 +143,13 @@ local configuration = { -- Rename this file to configuration.lua for the bot to 
             ['default'] = 3
         },
         ['captcha'] = {
+            -- NB IMAGES MUST NOT BE LARGER THAN 200x150
+            -- safe and simple generator for systems with imagick
+            ['generator_command'] = 'convert -fill "#000000" -stroke "#ffffff" -pointsize "{SIZE}" -font "{FONT}" "label:{TEXT}"  -distort Perspective "0,0,0,0 0,41,0,45 69,0,65,0" -wave 2x3 "{FILENAME}"',
+            --  you might prefer the one that comes with ejabberd. GPL i think: https://github.com/processone/ejabberd/blob/master/tools/captcha.sh
+            --['generator_command'] = '/usr/share/ejabberd/captcha.sh "{TEXT}" > "{FILENAME}"',
+            -- alternatively, here's one I which produces output SIMILAR to the old lua generator: https://github.com/flauntbot/captcha-gd
+            --['generator_command'] = 'captcha-gd "{TEXT}" "{FONT}" > "{FILENAME}"',
             ['length'] = {
                 ['min'] = 4,
                 ['max'] = 10,
@@ -163,7 +157,7 @@ local configuration = { -- Rename this file to configuration.lua for the bot to 
             },
             ['size'] = {
                 ['min'] = 20,
-                ['max'] = 50,
+                ['max'] = 72,
                 ['default'] = 40
             },
             ['timeout'] = {
@@ -175,9 +169,16 @@ local configuration = { -- Rename this file to configuration.lua for the bot to 
         ['allowed_links'] = {
             'username',
             'telegram',
-            'mattata',
+            'mafflebot',
+            'flauntbot',
+            'ditherbot',
+            'mattatabot',
+            'matticatebot',
+            'mtfutilsbot',
+            'calsibot',
             'admin',
-            'admins'
+            'admins',
+            'flaunt_and_dither'
         },
         ['aliases'] = {
             ['length'] = {
@@ -232,7 +233,7 @@ local configuration = { -- Rename this file to configuration.lua for the bot to 
     },
     ['sort_groups'] = true, -- Decides whether groups will be sorted by name in /groups.
     ['stickers'] = { -- Values used in mattata.lua, for administrative plugin functionality.
-    -- These are the file_id values for stickers which are binded to the relevant command.
+        -- These are the file_id values for stickers which are binded to the relevant command.
         ['ban'] = {
             'AgAD0AIAAlAYNw0',
             'AgADzwIAAlAYNw0'
@@ -372,10 +373,10 @@ end
 
 local get_fonts = function()
     local fonts = {}
-    local list = io.popen('ls fonts/')
+    local list = io.popen('ls ' .. configuration.fonts_directory )
     local all = list:read('*all')
     list:close()
-    for font in all:gmatch('%a+') do
+    for font in all:gmatch('(%a+.%a+)') do
         table.insert(fonts, font)
     end
     return fonts

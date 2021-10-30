@@ -1,31 +1,34 @@
 I'd like to thank the following people for their support, feedback and ideas:
+@DespeoN
+@FabianPastor
+@Floodie_Wowers
+@Floofy_Fox
+@JuanPotato
+@JustaDebianDistro
+@MazenK
+@POTUS
+@T3CHNO
+@TheWiseOwl
+@Vontus
+@Zenexer
 @aaomidi
 @bo0tzz
 @caidens
 @danogentili
-@DespeoN
 @eaglezz11
 @emcakes2
 @enotly
-@FabianPastor
-@Floodie_Wowers
-@Floofy_Fox
 @hstntn
-@JuanPotato
-@JustaDebianDistro
 @kiritjom
 @marcsello
-@MazenK
 @nickrobson
 @nootnootnootnootnoot
-@POTUS
+@nusent
 @semangkasegar
-@T3CHNO
-@TheWiseOwl
-@topkecleon
-@Vontus
+@tejmar
+@topkecleon (original otoutou author)
+@wrxck (original mattata author)
 @xenial
 @xxdamage
 @zackpollard
-@Zenexer
 There are more that I've probably forgotten, and some don't have usernames. Contact me on Telegram if you believe you should be on here!

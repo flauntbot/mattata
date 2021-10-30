@@ -35,53 +35,93 @@ function commandstats.reset_command_stats(chat_id)
     return true
 end
 
-function commandstats.get_command_stats(chat_id, title, language)
-    local commands = redis:smembers('chat:' .. chat_id .. ':commands')
+function commandstats.get_all_commands()
+    local keys = redis:keys('commandstats:*')
     local statistics = {}
-    for i = 1, #commands do
-        local command = commands[i]
-        local command_info = {
-            ['command'] = command
-        }
-        command_info.count = redis:get('commandstats:' .. chat_id .. ':' .. command)
-        if command_info.count and tonumber(command_info.count) ~= nil then
-            table.insert(statistics, command_info)
+    local commands = {}
+    for i = 1, #keys do
+        local name = string.match(keys[i], '[/!#]%a+')
+        if commands[name] then
+            commands[name] = commands[name] + redis:get(keys[i])
+        else
+            commands[name] = redis:get(keys[i])
         end
     end
-    table.sort(statistics, function(a, b)
-        if a.count and b.count then
-            return tonumber(a.count) > tonumber(b.count)
+    for k, v in pairs(commands) do
+        table.insert(statistics, {
+            ['command'] = k,
+            ['count'] = v
+        })
+    end
+    return statistics
+end
+
+function commandstats.get_command_stats(chat_id, title, language)
+    local statistics
+    if chat_id == 0 then
+        statistics = commandstats.get_all_commands()
+    else
+        statistics = {}
+        local commands = redis:smembers('chat:' .. chat_id .. ':commands')
+        for i = 1, #commands do
+            local command = commands[i]
+            local command_info = {
+                ['command'] = command
+            }
+            command_info.count = redis:get('commandstats:' .. chat_id .. ':' .. command)
+            if command_info.count and tonumber(command_info.count) ~= nil then
+                table.insert(statistics, command_info)
+            end
         end
+
+    end
+    table.sort(statistics, function(a, b)
+    if a.count and b.count then
+    return tonumber(a.count) > tonumber(b.count)
+    end
     end)
     local total = 0
     for _, v in pairs(statistics) do
-        total = total + v.count
+    total = total + v.count
     end
     local text = ''
     local output = {}
-    for i = 1, 10 do
-        table.insert(output, statistics[i])
+    local lim = 10
+    if chat_id == 0 then
+        lim = #statistics
+    end
+    for i = 1, lim do
+    table.insert(output, statistics[i])
     end
     for _, v in pairs(output) do
-        local percent = tostring(mattata.round((v.count / total) * 100, 1))
-        text = text .. mattata.escape_html(v.command) .. ': <b>' .. mattata.comma_value(v.count) .. '</b> [' .. percent .. '%]\n'
+    local percent = tostring(mattata.round((v.count / total) * 100, 1))
+    percent = string.format('%.1f', percent)
+    text = text .. mattata.escape_html(v.command) .. ': <b>' .. mattata.comma_value(v.count) .. '</b> [' .. percent .. '%]\n'
     end
     if not text or text == '' then
-        return language['commandstats']['1']
+    return language['commandstats']['1']
     end
     return string.format(
-        language['commandstats']['2'],
-        mattata.escape_html(title), text,
-        mattata.comma_value(total):gsub('%..-$', '')
+    language['commandstats']['2'],
+    mattata.escape_html(title), text,
+    mattata.comma_value(total):gsub('%..-$', '')
     )
-end
+    end
 
 function commandstats.on_message(_, message, _, language)
+    local input = mattata.input(message.text)
+    local output
+    -- added this because.... dying to know. but it uses redis KEYS method, which is SLOW and LOCKS DB
+    -- how can i change to SCAN or otherwise go faster?
+    if input and input:lower() == 'all' and mattata.is_global_admin(message.from.id) then
+        output = commandstats.get_command_stats(0, 'all chats', language)
+        return mattata.send_message(message.chat.id, output, 'html')
+    end
+
     if message.chat.type == 'private' then
         return mattata.send_message(message.chat.id, language.errors.supergroup)
     end
-    local input = mattata.input(message.text)
-    local output
+
     if input and input:lower() == 'reset' and mattata.is_group_admin(message.chat.id, message.from.id) then
         output = commandstats.reset_command_stats(message.chat.id) and language['commandstats']['3'] or language['commandstats']['4']
         return mattata.send_message(message.chat.id, output)
