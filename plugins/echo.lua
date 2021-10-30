@@ -8,7 +8,7 @@ local mattata = require('mattata')
 
 function echo:init()
     echo.commands = mattata.commands(self.info.username):command('echo'):command('say').table
-    echo.help = '/echo <text> - Repeats the given string of text. Append -del to the end of your text to delete your command message. Alias: /say.'
+    echo.help = '/echo <text> - Repeats the given string of text. Append " -d" to the end of your text to delete your command message. Alias: /say.'
 end
 
 function echo.on_message(_, message)
