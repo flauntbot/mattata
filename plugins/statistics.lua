@@ -71,6 +71,7 @@ function statistics.get_message_statistics(message, language, more)
         count = count + 1
         local message_count = v.messages
         local percent = tostring(mattata.round((message_count / total) * 100, 1))
+        percent = string.format('%.1f', percent)
         text = text .. count .. '. ' .. mattata.get_formatted_user(v.id, v.name, 'html') .. ': <b>' .. mattata.comma_value(message_count) .. '</b> [' .. percent .. '%]\n'
     end
     text = text .. string.format('\n<em>I have seen %s/%s users in this group</em>', #redis:smembers('chat:' .. message.chat.id .. ':users'), mattata.get_chat_members_count(message.chat.id).result)
