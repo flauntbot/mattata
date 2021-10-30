@@ -119,7 +119,12 @@ function commandstats.on_message(_, message, _, language)
     end
 
     if message.chat.type == 'private' then
-        return mattata.send_message(message.chat.id, language.errors.supergroup)
+        if input and input:lower() == 'reset' then
+            output = commandstats.reset_command_stats(message.chat.id) and language['commandstats']['3'] or language['commandstats']['4']
+            return mattata.send_message(message.chat.id, output)
+        end
+        output = commandstats.get_command_stats(message.chat.id, message.chat.title, language)
+        return mattata.send_message(message.chat.id, output, 'html')
     end
 
     if input and input:lower() == 'reset' and mattata.is_group_admin(message.chat.id, message.from.id) then
