@@ -39,7 +39,7 @@ function imgur:on_message(message, configuration, language)
             'There was an error whilst retrieving that photo, so I could not upload it to Imgur - perhaps it\'s too old?'
         )
     end
-    local query = 'image=' .. url.escape('https://api.telegram.org/file/bot' .. configuration.bot_token .. '/' .. success.result.file_path)
+    local query = 'image=' .. url.escape(configuration.endpoint .. configuration.bot_token .. '/' .. success.result.file_path)
     if message.reply.caption
     then
         if message.reply.caption:match('^.- %- .-$')

@@ -38,7 +38,7 @@ function sonofabitch:on_inline_query(inline_query, configuration, language)
             return false
         end
         local file_name = file.result.file_path
-        local file_path = string.format('https://api.telegram.org/file/bot%s/%s', configuration.bot_token, file_name)
+        local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
         file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.bot_directory)
         if not file then
             return false
@@ -76,10 +76,14 @@ function sonofabitch.on_message(_, message, configuration)
         return false
     end
     local file_name = file.result.file_path
-    local file_path = string.format('https://api.telegram.org/file/bot%s/%s', configuration.bot_token, file_name)
-    file = mattata.download_file(file_path, file_name:match('/(.-)$'), '/home/matt/matticatebot')
-    if not file then
-        return false
+    if not configuration.local_mode then
+        local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
+        file = mattata.download_file(file_path, file_name:match('/(.-)$'),  configuration.files_path)
+        if not file then
+            return false
+        end
+    else
+        file = file_name
     end
     local command = string.format('convert soab.png %s -gravity northwest -geometry +100+250 -composite output.png', file)
     os.execute(command)
@@ -89,7 +93,11 @@ function sonofabitch.on_message(_, message, configuration)
     end
     redis:set('sonofabitch:' .. message.reply.from.id, success.result.photo[#success.result.photo].file_id)
     redis:expire('sonofabitch:' .. message.reply.from.id, 86400)
-    os.execute('rm ' .. file .. ' && rm output.png')
+    if not configuration.local_mode then
+        os.execute('rm ' .. file .. ' && rm output.png')
+    else
+        os.execute('rm output.png')
+    end
     return success
 end
 

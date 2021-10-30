@@ -24,18 +24,25 @@ function needsmorejpeg.on_message(_, message, configuration)
         return false
     end
     local file_name = file.result.file_path
-    local file_path = string.format('https://api.telegram.org/file/bot%s/%s', configuration.bot_token, file_name)
-    file = mattata.download_file(file_path, file_name:match('/(.-)$'), '/home/matt/matticatebot')
-    if not file then
-        return false
+    local file2
+    if not configuration.local_mode then
+        local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
+        file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.files_path)
+        if not file then
+            return false
+        end
+        file2 = file
+    else
+        file = file_name
+        file2 = configuration.files_path .. '/' .. string.gsub(file, '(.*/)(.*)', '%2')
     end
-    local command = string.format('/home/matt/matticatebot/magick %s -quality 4 %s', file, file)
+    local command = string.format('convert %s -quality 4 %s', file, file2)
     os.execute(command)
-    local success = mattata.send_photo(message.chat.id, file)
+    local success = mattata.send_photo(message.chat.id, file2)
     if not success then
         return false
     end
-    os.execute('rm ' .. file)
+    os.execute('rm ' .. file2)
     return success
 end
 
