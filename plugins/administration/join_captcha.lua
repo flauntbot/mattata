@@ -6,7 +6,7 @@
 local join_captcha = {}
 local mattata = require('mattata')
 local redis = require('libs.redis')
-local captcha_lib = require('captcha')
+local captcha_lib = require('libs.saptcha')
 
 function join_captcha.cron(_, configuration)
     local keys = redis:keys('chat:*:captcha:*')
@@ -107,38 +107,39 @@ function join_captcha.on_member_join(_, message, configuration)
     if download_location:match('/$') then
         download_location = download_location:match('^(.-)/$')
     end
-    local new_captcha = captcha_lib.new()
+
     local size = mattata.get_setting(message.chat.id, 'captcha size') or configuration.administration.captcha.size.default
     size = math.floor(size)
     local length = mattata.get_setting(message.chat.id, 'captcha length') or configuration.administration.captcha.length.default
     length = math.floor(length)
-    local captchas = configuration.administration.captcha.files
+    local fonts = configuration.administration.captcha.files
     local current = mattata.get_setting(message.chat.id, 'captcha font') or 1
     current = math.floor(current)
-    local font = captchas[current] or captchas[1]
+    local font = fonts[current] or fonts[1]
     local timeout = mattata.get_setting(message.chat.id, 'captcha timeout') or configuration.administration.captcha.timeout.default
-    new_captcha:setlength(length)
+    local captchas = mattata.random_string(length, 6)
+    local new_captcha = captcha_lib.new(captchas[6])
     new_captcha:setfontsize(size)
-    new_captcha:setpath(download_location)
-    new_captcha:setformat('jpg')
     new_captcha:setfontsfolder(configuration.fonts_directory .. '/' .. font)
-    local generated_captcha, correct = new_captcha:generate()
+    local generated_captcha, correct = new_captcha:generate(configuration.administration.captcha.generator_command)
     local username = mattata.get_formatted_user(message.new_chat_participant.id, message.new_chat_participant.first_name)
-    local msg = string.format('Hey, %s! Please enter the above CAPTCHA using the buttons below before you can speak! You will be removed in 5 minutes if you don\'t do this.\n_Click to expand the image on Android devices!_', username)
-    captchas = mattata.random_string(length, 5)
-    table.insert(captchas, correct)
+    local msg = string.format('Hey, %s! Please enter the above CAPTCHA using the buttons below before you can speak! You will be removed in %s minutes if you don\'t do this.', username, timeout)
+
     table.sort(captchas)
     local callback_data = string.format('join_captcha:%s:%s', message.chat.id, message.new_chat_participant.id)
     local keyboard = mattata.inline_keyboard():row(
-        mattata.row()
-        :callback_data_button(captchas[1], callback_data .. ':' .. captchas[1])
-        :callback_data_button(captchas[2], callback_data .. ':' .. captchas[2])
-        :callback_data_button(captchas[3], callback_data .. ':' .. captchas[3])
+            mattata.row()
+                   :callback_data_button(captchas[1], callback_data .. ':' .. captchas[1])
+                   :callback_data_button(captchas[2], callback_data .. ':' .. captchas[2])
     ):row(
-        mattata.row()
-        :callback_data_button(captchas[4], callback_data .. ':' .. captchas[4])
-        :callback_data_button(captchas[5], callback_data .. ':' .. captchas[5])
-        :callback_data_button(captchas[6], callback_data .. ':' .. captchas[6])
+            mattata.row()
+                   :callback_data_button(captchas[3], callback_data .. ':' .. captchas[3])
+                   :callback_data_button(captchas[4], callback_data .. ':' .. captchas[4])
+    )
+            :row(
+            mattata.row()
+                   :callback_data_button(captchas[5], callback_data .. ':' .. captchas[5])
+                   :callback_data_button(captchas[6], callback_data .. ':' .. captchas[6])
     )
     local success = mattata.send_photo(message.chat.id, generated_captcha, msg, 'markdown', false, nil, keyboard)
     if not success then
