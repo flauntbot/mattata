@@ -12,7 +12,7 @@ local redis = require('libs.redis')
 
 function remind:init()
     remind.commands = mattata.commands(self.info.username):command('remind'):command('reminders').table
-    remind.help = '/remind <duration> <message> - Repeats a message after a duration of time, in the format 2d3h. The maximum number of reminders at one time is 4 per chat, and each reminder must be between 1 hour and 182 days in duration. Reminders cannot be any more than 256 characters in length. Use /reminders to view your current reminders. An example use of this command would be: /remind 21d3h test, which would remind you in 21 days and 3 hours.'
+    remind.help = '/remind <duration> <message> - Repeats a message after a duration of time, in the format 2d3h. The maximum number of reminders at one time is 4 per chat, and each reminder must be between 1 hour and 365 days in duration. Reminders cannot be any more than 256 characters in length. Use /reminders to view your current reminders. An example use of this command would be: /remind 21d3h test, which would remind you in 21 days and 3 hours.'
 end
 
 function remind.get_reminders(message)
