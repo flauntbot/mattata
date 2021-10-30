@@ -9,10 +9,11 @@ local sed = {}
 local mattata = require('mattata')
 local re = require('re')
 local regex = require('rex_pcre')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function sed:init()
     sed.commands = { '^[sS]/.-/.-/?.?$' }
-    sed.help = 's/pattern/substitution - Replaces all occurences, of text matching a given Lua pattern, with the given substitution.'
+    sed.help = 's/pattern/substitution - Replaces all occurences, of text matching a given PCRE pattern, with the given substitution.'
 end
 
 local compiled = re.compile[[
@@ -74,10 +75,10 @@ end
 function sed:on_message(message, _, language)
     if not message.reply then
         return false
-    elseif message.reply.from.id == self.info.id then
-        return mattata.send_reply(message, language['sed']['4'], 'html')
-    elseif message.reply.from.id == message.from.id then
-        return mattata.send_reply(message, language['sed']['10'])
+    --elseif message.reply.from.id == self.info.id then
+    --    return mattata.send_reply(message, language['sed']['4'], 'html')
+    --elseif message.reply.from.id == message.from.id then
+    --    return mattata.send_reply(message, language['sed']['10'])
     end
     local input = message.reply.text
     local text = message.text:match('^[sS]/(.*)$')

@@ -9,7 +9,7 @@ local redis = require('libs.redis')
 
 function addslap:init()
     addslap.commands = mattata.commands(self.info.username):command('addslap').table
-    addslap.help = '/addslap <slap> - Adds a new slap to /slap. Slaps must only contain letters, numbers, hyphens, underscores, commands, forward slashes or full stops. Use the placeholders {ME} for the person slapping, and {THEM} for the person being slapped. An example would be: {ME} threw {THEM} into a house fire. Slaps can be no longer than 256 characters long, but there is currently no limit to how many you can add. This feature is in beta, and there is currently no way to delete a slap you add - this will be added later. If you want to delete yours, send a PM to @wrxck.'
+    addslap.help = '/addslap <slap> - Adds a new slap to /slap. Slaps must only contain letters, numbers, hyphens, underscores, commands, forward slashes or full stops. Use the placeholders {ME} for the person slapping, and {THEM} for the person being slapped. An example would be: {ME} threw {THEM} into a house fire. Slaps can be no longer than 256 characters long, but there is currently no limit to how many you can add. This feature is in beta, and there is currently no way to delete a slap you add - this will be added later. If you want to delete yours, visit @flaunt_and_dither.'
 end
 
 function addslap.on_message(_, message, _, language)

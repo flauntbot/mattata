@@ -16,7 +16,7 @@ function languages:on_message(message)
     return mattata.send_message(
         message.chat.id,
         missing_languages
-        and ('The following locales are languages my users speak that I do not currently have a translation file for:\n\n' .. missing_languages .. '\n\nIf you speak any of these languages well, and you are willing to volunteer your time into contributing to the development of mattata in the form of translating a file containing strings, please join https://t.me/mattataDev - thank you!')
+        and ('The following locales are languages my users speak that I do not currently have a translation file for:\n\n' .. missing_languages .. '\n\nIf you speak any of these languages well, and you are willing to volunteer your time into contributing to the development of mattata in the form of translating a file containing strings, please join https://t.me/flaunt_and_dither - thank you!')
         or 'At this moment in time, all of the languages spoken by my users have been translated, and can be selected by using /setlang!'
     )
 end

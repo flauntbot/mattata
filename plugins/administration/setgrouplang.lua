@@ -10,7 +10,7 @@ local json = require('dkjson')
 
 function setgrouplang:init()
     setgrouplang.commands = mattata.commands(self.info.username):command('setgrouplang').table
-    setgrouplang.help = '/setgrouplang - Allows you to force mattata to respond to all members of the current chat in the selected language.'
+    setgrouplang.help = '/setgrouplang - Allows you to force the bot to respond to all members of the current chat in the selected language.'
 end
 
 setgrouplang.languages = {

@@ -34,7 +34,7 @@ function groups:on_message(message, configuration, language)
         end
     end
     if not next(output) then
-        local output = 'No groups were found. If you\'d like your group to appear here, contact @wrxck.'
+        local output = 'No groups were found. If you\'d like your group to appear here, contact @flaunt_and_dither.'
         if input then
             output = string.format('No groups were found matching "%s"! Use /groups to view a complete list of available groups.', input)
         end

@@ -9,7 +9,7 @@ local redis = require('libs.redis')
 
 function import:init()
     import.commands = mattata.commands(self.info.username):command('import').table
-    import.help = '/import - Import administrative settings & toggled plugins from another mattata-administrated group.'
+    import.help = string.format('/import - Import administrative settings & toggled plugins from another %s-administrated group.', self.info.username)
 end
 
 function import.on_message(_, message, _, language)
