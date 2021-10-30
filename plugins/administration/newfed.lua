@@ -5,13 +5,22 @@
 
 local newfed = {}
 local mattata = require('mattata')
-local uuid = require('uuid')
 local redis = require('libs.redis')
 
 function newfed:init(configuration)
     newfed.commands = mattata.commands(self.info.username):command('newfed').table
     newfed.help = '/newfed <fed name> - Allows a group admin to create a new Fed, and return its UUID.'
     newfed.limit = configuration.administration.feds.group_limit
+end
+
+function newfed.uuidgen()
+    local f = assert(io.popen('uuidgen', 'r'))
+    local s = assert(f:read('*a'))
+    f:close()
+    s = string.gsub(s, '^%s+', '')
+    s = string.gsub(s, '%s+$', '')
+    s = string.gsub(s, '[\n\r]+', ' ')
+    return s
 end
 
 function newfed.on_message(_, message, _, language)
@@ -28,13 +37,12 @@ function newfed.on_message(_, message, _, language)
     elseif input:len() > 128 then
         return mattata.send_reply(message, 'Fed names cannot be longer than 128 characters in length!')
     end
-    uuid.seed()
-    local fed_uuid = uuid.new()
+    local fed_uuid = newfed.uuidgen()
     local feds = redis:smembers('chat:' .. message.chat.id .. ':feds')
     if message.chat.type ~= 'private' and #feds >= newfed.limit then
         return mattata.send_reply(message, 'This group is already part of ' .. newfed.limit .. ' or more Feds. To leave one of these Feds and create a new one (starting with this chat in it), please send /leavefed <fed UUID> and then try this command again! Alternatively, to create a Fed but not have this group join it, use this command in private message!')
     elseif redis:exists('fedmembers:' .. fed_uuid) then -- EXTREMELY unlikely it would generate the same UUID but I know my luck
-        fed_uuid = uuid.new()
+        fed_uuid = newfed.uuidgen()
     end
     redis:hset('fed:' .. fed_uuid, 'creator', message.from.id)
     redis:hset('fed:' .. fed_uuid, 'date_created', os.time())
