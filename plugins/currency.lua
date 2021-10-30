@@ -11,8 +11,8 @@ local https = require('ssl.https')
 
 function currency:init()
     currency.commands = mattata.commands(self.info.username):command('currency'):command('convert'):command('cash').table
-    currency.help = '/currency <amount> <from> to <to> - Converts exchange rates for various currencies via Google Finance. Aliases: /convert, /cash.'
-    currency.url = 'https://www.google.com/finance/converter?from=%s&to=%s&a=%s'
+    currency.help = '/currency <amount> <from> to <to> - Converts exchange rates for various currencies via DuckDuckGo. Aliases: /convert, /cash.'
+    currency.url = 'https://duckduckgo.com/js/spice/currency/%s/%s/%s'
 end
 
 function currency.on_message(_, message, _, language)
@@ -27,11 +27,11 @@ function currency.on_message(_, message, _, language)
     amount = tonumber(amount) or 1
     local result = 1
     if from ~= to then
-        local str, res = https.request(string.format(currency.url, from, to, amount))
+        local str, res = https.request(string.format(currency.url, amount, from, to))
         if res ~= 200 then
             return mattata.send_reply(message, language.errors.connection)
         end
-        str = str:match('<span class=bld>(.-) %u+</span>')
+        str = str:match('"converted.amount": "([%d.]+)",')
         if not str then
             return mattata.send_reply(message, language.errors.results)
         end

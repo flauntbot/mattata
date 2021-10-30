@@ -7,7 +7,7 @@
 
 local reddit = {}
 local mattata = require('mattata')
-local https = require('ssl.https')
+local https = require 'http.request'
 local json = require('dkjson')
 
 function reddit:init()
@@ -58,8 +58,6 @@ function reddit.on_message(_, message, configuration, language)
         return mattata.send_reply(message, 'That\'s not a valid subreddit!')
     end
     local request_url = 'https://www.reddit.com/.json?limit=' .. limit
-    local old_timeout = https.TIMEOUT
-    https.TIMEOUT = 1
     if subreddit == 'random' or subreddit == 'randnsfw' then
         if message.chat.type ~= 'private' and subreddit == 'randnsfw' then
             subreddit = 'random'
@@ -74,11 +72,11 @@ function reddit.on_message(_, message, configuration, language)
         request_url = 'https://www.reddit.com/r/' .. subreddit .. '/.json?limit=' .. limit
     end
     local output = '<b>/r/' .. subreddit .. '</b>\n'
-    local jstr, res = https.request(request_url)
-    https.TIMEOUT = old_timeout
-    if res == 404 or res == 'wantread' then
+    local headers, stream = https.new_from_uri(request_url):go()
+    local jstr = stream:get_body_as_string()
+    if headers:get ':status' == '404' or headers:get ':status' == 'wantread' then
         return mattata.send_reply(message, language['errors']['results'])
-    elseif res ~= 200 then
+    elseif headers:get ':status' ~= '200' then
         return mattata.send_reply(message, language['errors']['connection'])
     end
     local jdat = json.decode(jstr)

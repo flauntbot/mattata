@@ -13,7 +13,7 @@ local json = require('dkjson')
 function dictionary:init(configuration)
     dictionary.commands = mattata.commands(self.info.username):command('dictionary'):command('define').table
     dictionary.help = '/dictionary <word> - Looks up the given word in the Oxford Dictionary and returns the relevant definition(s). Alias: /define.'
-    dictionary.url = 'https://od-api.oxforddictionaries.com/api/v1/entries/en/'
+    dictionary.url = 'https://od-api.oxforddictionaries.com/api/v2/entries/en/'
     dictionary.id = configuration.keys.dictionary.id
     dictionary.key = configuration.keys.dictionary.key
 end

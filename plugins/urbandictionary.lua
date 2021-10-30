@@ -6,8 +6,8 @@
 local urbandictionary = {}
 
 local mattata = require('mattata')
-local http = require('socket.http')
 local url = require('socket.url')
+local https = require 'http.request'
 local json = require('dkjson')
 local redis = require('libs.redis')
 
@@ -25,8 +25,9 @@ function urbandictionary:on_inline_query(inline_query, configuration)
     if not input then
         return
     end
-    local jstr, res = http.request('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input))
-    if res ~= 200 then
+    local headers, stream = https.new_from_uri('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input)):go()
+    local jstr = stream:get_body_as_string()
+    if headers:get ':status' ~= '200' then
         return
     end
     local jdat = json.decode(jstr)
@@ -58,8 +59,9 @@ function urbandictionary:on_inline_query(inline_query, configuration)
 end
 
 function urbandictionary.get_result_count(input)
-    local jstr, res = http.request('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input))
-    if res ~= 200 then
+    local headers, stream = https.new_from_uri('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input)):go()
+    local jstr = stream:get_body_as_string()
+    if headers:get ':status' ~= '200' then
         return 0
     end
     local jdat = json.decode(jstr)
@@ -71,8 +73,9 @@ end
 
 function urbandictionary.get_result(input, n)
     n = n or 1
-    local jstr, res = http.request('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input))
-    if res ~= 200 then
+    local headers, stream = https.new_from_uri('http://api.urbandictionary.com/v0/define?term=' .. url.escape(input)):go()
+    local jstr = stream:get_body_as_string()
+    if headers:get ':status' ~= '200' then
         return false, false
     end
     local jdat = json.decode(jstr)

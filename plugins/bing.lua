@@ -26,7 +26,7 @@ function bing.on_message(_, message, configuration, language)
     end
     local body = {}
     local _, res = https.request({
-        ['url'] = 'https://api.cognitive.microsoft.com/bing/v7.0/search?responseFilter=Webpages&safeSearch=Off&q=' .. url.escape(input),
+        ['url'] = 'https://api.bing.microsoft.com/v7.0/search?responseFilter=Webpages&safeSearch=Off&q=' .. url.escape(input),
         ['headers'] = {
             ['Ocp-Apim-Subscription-Key'] = bing.key,
             ['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko'
@@ -41,8 +41,11 @@ function bing.on_message(_, message, configuration, language)
         return mattata.send_reply(message, language.errors.results)
     end
     local limit = message.chat.type == 'private' and configuration.limits.bing.private or configuration.limits.bing.public
-    if limit > #jdat.webPages.value and #jdat.webPages.value or limit == 0 then
+    if --[[ limit > #jdat.webPages.value and #jdat.webPages.value or ]] limit == 0 then
         return mattata.send_reply(message, language.errors.results)
+    end
+    if limit > #jdat.webPages.value and #jdat.webPages.value then
+        limit = #jdat.webPages.value
     end
     local results = {}
     local count = 0

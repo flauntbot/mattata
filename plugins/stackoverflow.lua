@@ -42,7 +42,7 @@ function stackoverflow.on_message(_, message, configuration, language)
         return mattata.send_reply(message, language.errors.connection)
     end
     local jstr = table.concat(response)
-    jstr = zlib.decompress(jstr, 31)
+    jstr = zlib.inflate(31)(jstr)
     local jdat = json.decode(jstr)
     if not jdat.items or not jdat.items[1] then
         return mattata.send_reply(message, language.errors.results)

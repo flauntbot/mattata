@@ -15,20 +15,12 @@ function weather:init()
     weather.help = '/weather [location] - If no arguments are given, the weather forecast for your known location is given. If a location is given, then the weather forecast for that location is given instead.'
 end
 
-function weather.format_temperature(temperature, units)
+function weather.format_temperature(temperature)
     temperature = tonumber(temperature)
-    if units ~= 'us'
-    then
-        return temperature .. '°C/' .. string.format(
-            '%.2f',
-            temperature * 9 / 5 + 32
-        ) .. '°F'
-    else
-        return temperature .. '°F/' .. string.format(
-            '%.2f',
-            (temperature - 32) * 5 / 9
-        ) .. '°C'
-    end
+    return temperature .. '°C/' .. string.format(
+        '%.2f',
+        temperature * 9 / 5 + 32
+    ) .. '°F'
 end
 
 function weather.get_weather(input, configuration)
@@ -70,7 +62,7 @@ function weather:on_message(message, configuration, language)
             )
         end
     end
-    local jstr, res = https.request('https://api.darksky.net/forecast/' .. configuration.keys.weather .. '/' .. latitude .. ',' .. longitude .. '?units=auto')
+    local jstr, res = https.request('https://api.openweathermap.org/data/2.5/weather?units=metric&lat=' .. latitude .. '&lon=' .. longitude .. '&appid=' .. configuration.keys.weather)
     if res ~= 200
     then
         return mattata.send_reply(
@@ -84,15 +76,13 @@ function weather:on_message(message, configuration, language)
         string.format(
             language['weather']['2'],
             weather.format_temperature(
-                jdat.currently.temperature,
-                jdat.flags.units
+                jdat.main.temp
             ),
             weather.format_temperature(
-                jdat.currently.apparentTemperature,
-                jdat.flags.units
+                jdat.main.feels_like
             ),
             address,
-            jdat.daily.summary
+            jdat.weather[1].description
         )
     )
 end

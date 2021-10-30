@@ -1,4 +1,4 @@
---[[
+ --[[
     Copyright 2020 Matthew Hesketh <matthew@matthewhesketh.com>
     This code is licensed under the MIT. See LICENSE for details.
 ]]
@@ -39,7 +39,7 @@ function answer:on_message(message, _, language)
     local heading = jdat.Heading
     local body = jdat.AbstractText ~= '' and jdat.AbstractText or jdat.RelatedTopics[1].Text or 'Couldn\'t find a description, try sending /wiki ' .. jdat.Heading
     local via = jdat.AbstractSource ~= '' and jdat.AbstractSource or jdat.RelatedTopics[1].FirstURL
-    local image = jdat.Image ~= '' and jdat.Image or jdat.RelatedTopics[1] and jdat.RelatedTopics[1].Icon.URL
+    local image = jdat.Image ~= '' and jdat.Image -- or jdat.RelatedTopics[1] and jdat.RelatedTopics[1].Icon.URL
     if via:lower() == 'wikipedia' then
         via = '<a href="https://en.wikipedia.org">Wikipedia</a>'
     end

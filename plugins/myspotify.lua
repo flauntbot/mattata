@@ -73,14 +73,6 @@ function myspotify.get_keyboard(user_id, language, force_playing_state)
             utf8.char(128256),
             'myspotify:shuffle:' .. user_id
         )
-    ):row(
-        mattata.row():switch_inline_query_current_chat_button(
-            'Use Inline Mode',
-            '/myspotify'
-        ):callback_data_button(
-            'Lyrics',
-            'myspotify:lyrics:' .. user_id
-        )
     )
 end
 
@@ -729,14 +721,6 @@ function myspotify.on_callback_query(_, callback_query, message, configuration, 
             output = language.errors.generic
         end
         mattata.answer_callback_query(callback_query.id, output)
-    elseif callback_query.data == 'lyrics' then
-        local artist = myspotify.get_current_artist(user_id)
-        local track = myspotify.get_current_track(user_id, language, true)
-        if artist then
-            track = artist .. ' - ' .. track
-        end
-        local lyrics = require('plugins.lyrics')
-        output = lyrics.send_request(track)
     end
     output = output or language.errors.generic
     local preview = callback_query.data == 'currentlyplaying' and false or true
