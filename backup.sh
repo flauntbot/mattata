@@ -1,16 +1,17 @@
 redis-cli save
-redispassword=$(lua5.3 -e "print(require('configuration').redis.password)")
-redisdb=$(lua5.3 -e "print(require('configuration').redis.db)")
-redishost=$(lua5.3 -e "print(require('configuration').redis.host)")
-redisport=$(lua5.3 -e "print(require('configuration').redis.port)")
+redispassword=$(luajit -e "print(require('configuration').redis.password)")
+redisdb=$(luajit -e "print(require('configuration').redis.db)")
+redishost=$(luajit -e "print(require('configuration').redis.host)")
+redisport=$(luajit -e "print(require('configuration').redis.port)")
 if [ ! -d "backups/" ]; then
     mkdir backups
 fi
-cd backups/
-redisquery="-u $redishost:$redisport -d $redisdb"
+
 if [ ! $redispassword == "nil" ]; then
-    redisquery="-u :$redispassword@$redishost:$redisport -d $redisdb"
+    redis-dump -u ":$redispassword@$redishost:$redisport" -d "$redisdb" > "backups/$(date).json"
+else
+    redis-dump > "backups/$(date).json"
 fi
-redis-dump $redisquery > "$(date).json"
-printf "mattata's database has been saved!"
-cd ..
+printf "bot's database has been saved!"
+
+

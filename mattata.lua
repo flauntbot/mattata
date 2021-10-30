@@ -18,11 +18,12 @@ local ltn12 = require('ltn12')
 local json = require('dkjson')
 local redis = dofile('libs/redis.lua')
 local configuration = require('configuration')
-local api = require('telegram-bot-lua.core').configure(configuration.bot_token)
-local tools = require('telegram-bot-lua.tools')
+local api = require('telegram-bot-luajit.core').configure(configuration.bot_token, configuration.verbose, configuration.endpoint)
+local tools = require('telegram-bot-luajit.tools')
 local socket = require('socket')
 local utils = dofile('libs/utils.lua')
 local html = require('htmlEntities')
+local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 local plugin_list = {}
 local administrative_plugin_list = {}
@@ -109,9 +110,9 @@ function mattata:init()
     self.last_cache = self.last_cache or os.date('%d')
     local init_message = '<pre>' .. configuration.connected_message .. '\n\n' .. mattata.escape_html(info_message) .. '\n\n\tPlugins loaded: ' .. #configuration.plugins - #configuration.administrative_plugins .. '\n\tAdministrative plugins loaded: ' .. #configuration.administrative_plugins .. '</pre>'
     mattata.send_message(configuration.log_chat, init_message:gsub('\t', ''), 'html')
-    for _, admin in pairs(configuration.admins) do
-        mattata.send_message(admin, init_message:gsub('\t', ''), 'html')
-    end
+    --for _, admin in pairs(configuration.admins) do
+    --    mattata.send_message(admin, init_message:gsub('\t', ''), 'html')
+    --end
     local shutdown = redis:get('mattata:shutdown')
     if shutdown then
         local chat_id, message_id = shutdown:match('^(%-?%d+):(%d*)$')
@@ -998,6 +999,7 @@ function mattata.does_language_exist(language)
     )
 end
 
+-- FIXME this doesn't seem safe?
 function mattata.save_to_file(content, file_path)
     if not content then
         return false
@@ -1224,7 +1226,7 @@ function mattata:process_language(message)
             if (message.text == '/start' or message.text == '/start@' .. self.info.username) and message.chat.type == 'private' then
                 mattata.send_message(
                     message.chat.id,
-                    'It appears that I haven\'t got a translation in your language (' .. message.from.language_code .. ') yet. If you would like to voluntarily translate me into your language, please join <a href="https://t.me/mattataDev">my official development group</a>. Thanks!',
+                    'It appears that I haven\'t got a translation in your language (' .. message.from.language_code .. ') yet. If you would like to voluntarily translate me into your language, please join <a href="https://t.me/flaunt_and_dither">my official development group</a>. Thanks!',
                     'html'
                 )
             end
