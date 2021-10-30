@@ -5,14 +5,13 @@
 
 local jsondump = {}
 local mattata = require('mattata')
-local json = require('serpent')
+local json = require('dkjson')
 
 function jsondump:init()
     jsondump.commands = mattata.commands(self.info.username)
     :command('jsondump')
     :command('json').table
     jsondump.help = '/jsondump - Returns the raw JSON of your message. Alias: /json.'
-    json = require('dkjson')
     jsondump.serialise = function(input)
         return json.encode(
             input,
