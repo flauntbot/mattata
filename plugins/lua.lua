@@ -28,14 +28,14 @@ function lua:on_message(message, configuration, language)
     local output, success = load(
     "local mattata = require('mattata')\n\z
     local configuration = require('configuration')\n\z
-    local api = require('telegram-bot-lua.core').configure(configuration.bot_token)\n\z
-    local tools = require('telegram-bot-lua.tools')\n\z
+    local api = require('telegram-bot-luajit.core').configure(configuration.bot_token)\n\z
+    local tools = require('telegram-bot-luajit.tools')\n\z
     local https = require('ssl.https')\n\z
     local http = require('socket.http')\n\z
     local url = require('socket.url')\n\z
     local ltn12 = require('ltn12')\n\z
     local json = require('dkjson')\n\z
-    local utf8 = require('lua-utf8')\n\z
+    local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.\n\z
     local socket = require('socket')\n\z
     local redis = require('libs.redis')\n\z
     return function (self, message, configuration)\n" .. input .. '\nend')
