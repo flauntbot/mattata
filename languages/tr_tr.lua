@@ -6,7 +6,7 @@
 -- THESE ARE PLACEHOLDERS!
 
 -- DO NOT CHANGE ANY MARKDOWN/HTML FORMATTING!
--- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/mattataDev)
+-- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/flaunt_and_dither)
 
 return {
     ['errors'] = {
@@ -176,9 +176,6 @@ return {
         ['2'] = '"%s" was an unexpected word!',
         ['3'] = 'You cannot have a unit before a number!'
     },
-    ['captionbotai'] = {
-        ['1'] = 'Bu resmi gerçekten tarif edemiyorum!'
-    },
     ['cats'] = {
         ['1'] = 'Miyavvv!'
     },
@@ -214,10 +211,6 @@ return {
         ['3'] = 'Bu sohbetin komut istatistikleri sıfırlandı!',
         ['4'] = 'Bu sohbetin komut istatistiklerini sıfırlayamadım. Belki de daha önce sıfırlanmışlardır?'
     },
-    ['control'] = {
-        ['1'] = 'Pfft, dilersen!',
-        ['2'] = '%s Yeniden yükleniyor...'
-    },
     ['copypasta'] = {
         ['1'] = 'Yanıtlanan metin, %s karakterlerden uzun olmamalıdır.!'
     },
@@ -230,9 +223,6 @@ return {
 *Total deaths:* %s
 *New recovered cases:* %s
 *Total recovered cases:* %s]]
-    },
-    ['counter'] = {
-        ['1'] = 'Bu mesaja sayaç ekleyemedim!'
     },
     ['custom'] = {
         ['1'] = 'Başarılı! Bu mesaj şimdi birileri her kullandığı zaman gönderilecek %s!',
@@ -255,21 +245,7 @@ return {
         ['1'] = 'Lütfen Dogeify istediğiniz metni girin. Her cümle eğik çizgi veya yeni satırlar kullanılarak ayrılmalıdır.'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mattata project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mattata. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="https://paypal.me/wrxck">here</a>. Thank you for your continued support!'
-    },
-    ['exec'] = {
-        ['1'] = 'Lütfen kodunuzu yürütmek istediğiniz dili seçin:',
-        ['2'] = 'Bir hata oluştu! Bağlantı zaman aşımına uğradı. Beni geride bırakmaya mı çalışıyordun?',
-        ['3'] = 'Seçtiniz "%s" – emin misin?',
-        ['4'] = 'Geri',
-        ['5'] = 'Eminim',
-        ['6'] = 'Çalıştırmak istediğiniz kod parçacığını yazınız.Dili belirtmeniz gerekmiyor, bunu daha sonra yapacağız!',
-        ['7'] = 'Lütfen kodunuzu yürütmek istediğiniz dili seçin:'
-    },
-    ['facebook'] = {
-        ['1'] = 'Bir hata oluştu!',
-        ['2'] = 'Lütfen profil resmini almak istediğiniz Facebook kullanıcısının adını girin.',
-        ['3'] = 'Facebook da %s görüntüle'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['fact'] = {
         ['1'] = 'Başka Bir Tane Oluştur'
@@ -305,9 +281,6 @@ return {
         ['1'] = 'Lütfen genel kara listeye eklemek istediğiniz kullanıcıyı yanıtlayın veya kullanıcı adı veya kimlik numarasına göre belirtin.',
         ['2'] = 'Hakkında bilgi alamadım "%s", lütfen geçerli bir kullanıcı adı veya kimliğini kontrol edin ve tekrar deneyin.',
         ['3'] = 'Bu bir %s kullanıcı değil'
-    },
-    ['gif'] = {
-        ['1'] = 'Lütfen bir arama sorgusu girin (GIPHY de ne aramak istediğini belirt , örnek: "kedi" kedi ile ilgili olan GIF ler gösterilecek).'
     },
     ['gallowlist'] = {
         ['1'] = 'Lütfen genel olarak beyaz listeye eklemek isteyen kullanıcıyı yanıtlayın, kullanıcı adı veya kimlik numarasına göre belirtin.',
@@ -431,9 +404,6 @@ Sistem:
         ['9'] = 'iPad',
         ['10'] = 'Apple TV'
     },
-    ['ispwned'] = {
-        ['1'] = 'Bu hesap aşağıdaki sızıntılarda bulundu:'
-    },
     ['itunes'] = {
         ['1'] = 'İsim:',
         ['2'] = 'Sanatçı:',
@@ -480,11 +450,6 @@ Sistem:
     ['lua'] = {
         ['1'] = 'Lütfen yürütülecek bir Lua dizgesi girin!'
     },
-    ['lyrics'] = {
-        ['1'] = 'Spotify',
-        ['2'] = 'Şarkı sözlerini göster',
-        ['3'] = 'Lütfen bir arama sorgusu girin (aramak istediğin şarkı sözlerini belirt, örnek: "Ankaranın Bağları" Ankaranın bağları şarkı sözlerini getirecek.).'
-    },
     ['minecraft'] = {
         ['1'] = '<b>%s kullanıcı adını değiştirdi %s time</b>',
         ['2'] = '<b>%s  kullanıcı adını %s kere değiştirdi </b>',
@@ -526,7 +491,7 @@ Sistem:
         ['18'] = 'Spotify hesabınızı yeniden yetkilendirirken bir hata oluştu.!',
         ['19'] = 'Spotify hesabınız başarılı bir şekilde yeniden yetkilendirildi! İsteğinizi işleme koyabilirsiniz....',
         ['20'] = 'Spotify hesabınızı yeniden yetkilendirilecek, lütfen bekleyin...',
-        ['21'] = 'Spotify hesabınızı bağlamak için mattatayı yetkilendirmeniz gerekir. Tıklayın [buraya](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) Mattatayı Spotify hesabınıza bağlamak için yeşil "Tamam" düğmesine basın. Bunu yaptıktan sonra, yönlendirilen bağlantıyı şu adrese gönderin: ("%s" ile başlamalı ve onu benzersiz bir kod takip etmelidir).',
+        ['21'] = 'Spotify hesabınızı bağlamak için mafflebotyı yetkilendirmeniz gerekir. Tıklayın [buraya](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) Mattatayı Spotify hesabınıza bağlamak için yeşil "Tamam" düğmesine basın. Bunu yaptıktan sonra, yönlendirilen bağlantıyı şu adrese gönderin: ("%s" ile başlamalı ve onu benzersiz bir kod takip etmelidir).',
         ['22'] = 'Çalma listeleri',
         ['23'] = 'Satıriçi Modu Kullan',
         ['24'] = 'Şarkı sözleri',
@@ -549,15 +514,6 @@ Sistem:
         ['41'] = 'Ses seviyesi ayarlandı %s%%!',
         ['42'] = 'Bu ileti bu eklentinin eski bir sürümünü kullanıyor, lütfen /myspotify komutunu kullanarak yeni bir tane isteyin.!'
     },
-    ['name'] = {
-        ['1'] = 'Şu anda yanıtladığım isim "%s" - bunu değiştirmek için, /name <yazı> komutunu kullanın (Buradaki <yazı> bemin cevap vermemi istediğiniz şeydir).',
-        ['2'] = 'Yeni adım 2 ila 32 karakter uzunluğunda olmalıdır!',
-        ['3'] = 'İsmim yalnızca alfasayısal karakterler içerebilir!',
-        ['4'] = 'Şimdi "% s" yerine "% s" ye yanıt vereceğim - bunu değiştirmek için, /name <yazı> komutunu kullanın (Buradaki <yazı> benim cevap vermemi istediğiniz şeydir).'
-    },
-    ['netflix'] = {
-        ['1'] = 'Daha Fazla Bilgi Edinin'
-    },
     ['news'] = {
         ['1'] = '"<code>%s</code>" Geçerli bir Lua kalıbı değil.',
         ['2'] = 'Bir kaynak listesi alınamadı..',
@@ -574,13 +530,6 @@ Sistem:
     ['nick'] = {
         ['1'] = 'Takma adınız şimdi unutuldu!',
         ['2'] = 'Takma adınız "%s"!'
-    },
-    ['optout'] = {
-        ['1'] = 'Toplanan verileri göndermeyi için seçtiniz! /optout komutunu kullanın.',
-        ['2'] = 'Toplanan verileri göndermekten vazgeçtiniz! Etkinleştirmek için /optin komutunu kullanın.'
-    },
-    ['paste'] = {
-        ['1'] = 'Lütfen yapıştırma dosyanızı yüklemek için bir hizmet seçin:'
     },
     ['pin'] = {
         ['1'] = 'Daha önce bir mesaj sabitlemediniz. /pin <yazı> komutunu kullanarak bir tane oluşturun.Yazı tipi türlerini destekler.',
@@ -636,10 +585,6 @@ Sistem:
         ['1'] = 'Diliniz ayarlandı %s!',
         ['2'] = 'Diliniz şuanda %s.\nLütfen bazı dizelerin henüz tercüme edilmediğine dikkat ediniz. Dilinizi değiştirmek isterseniz, aşağıdaki klavyeyi kullanarak birini seçin:'
     },
-    ['setlink'] = {
-        ['1'] = 'Doğru bir URL değil.',
-        ['2'] = 'Link başarılı bir şekilde ayarlandı!'
-    },
     ['setrules'] = {
         ['1'] = 'Bilinmeyen yazı tipi formatı.',
         ['2'] = 'Yeni kural başarılı bir şekilde kaydedildi!'
@@ -651,14 +596,6 @@ Sistem:
     },
     ['share'] = {
         ['1'] = 'Paylaş'
-    },
-    ['shorten'] = {
-        ['1'] = 'Lütfen aşağıdaki butonları kullanarak bir URL kısaltıcı seçin:'
-    },
-    ['shsh'] = {
-        ['1'] = 'ECID için herhangi bir SHSH blobunu getiremedim, Lütfen geçerli olduğundan ve bunları kullanarak kaydettiğinizden emin olun https://tsssaver.1conan.com.',
-        ['2'] = 'SHSH Bu cihazın blobları, iOSun aşağıdaki sürümleri için kullanılabilir:\n',
-        ['3'] = 'İndir .zip'
     },
     ['statistics'] = {
         ['1'] = 'Bu sohbette hiç mesaj gönderilmedi!',
@@ -688,28 +625,6 @@ Sistem:
         ['2'] = 'Admin ve moderatörü güvenilmeyenler olarak ekleyemem.',
         ['3'] = 'Bu kullanıcıyı güvenilmeyenler listesine ekleyemem, kullanıcı gruptan ayrılmış.',
         ['4'] = 'Bu kullanıcıyı güvenilmeyenler listesine ekleyemem, kullanıcı gruptan atılmış.'
-    },
-    ['upload'] = {
-        ['1'] = 'Please reply to the file you\'d like to download to the server. It must be <= 20 MB.',
-        ['2'] = 'Dosya çok büyük boyutta. 20MBdan küçük olmalı <= 20 MB.',
-        ['3'] = 'Bu dosyayı alamıyorum, muhtemelen çok eski.',
-        ['4'] = 'Bu dosyayı alınırken bir hata meydana geldi.',
-        ['5'] = 'Dosyayı sunucudan başarılı bir şekilde indirdiniz - bulunabilir <code>%s</code>!'
-    },
-    ['voteban'] = {
-        ['1'] = 'Hangi kullanıcı için oyla-banla özelliği kullanmak istiyorsun? Bu kullanıcıyı @kulanıcıadı şeklinde veya kullanıcı IDsi ile belirtebilirsin.',
-        ['2'] = 'Admin için oyla-banla özelliği kullanılmaz',
-        ['3'] = 'Oyla-banla özelliğini kullanamıyorum, kullanıcı gruptan ayılmış veya banlanmış.',
-        ['4'] = '[%s] Buradan banlanması gerekir mi %s? %s hemen yasaklanması için oylama gerekir, ve %s bunun için en az oylama kapalı olmalıdır',
-        ['5'] = 'Evet [%s]',
-        ['6'] = 'Hayır [%s]',
-        ['7'] = '[%s] Buradan %s %s banlandı %s çünkü %s insanlar bunun için oy kullandılar.',
-        ['8'] = 'En yüksek oy miktarına ulaşıldı, ancak, banlayamam %s - belki onlar oylama yapılmadan önce gruptan ayrılmışlardır? Bu eylemi gerçekleştirmek için yetkiniz yok',
-        ['9'] = 'Onları %s [%s] banlayamam %s çünkü %s insanlar banlamak için karar vermemişler.',
-        ['10'] = 'Banlamak için oy kullandın %s [%s]!',
-        ['11'] = 'Oyun geri çekildi, butonu kullanarak tekrar oy kullanabilirsin.',
-        ['12'] = 'Banlama kararı alındı %s [%s]!',
-        ['13'] = 'A vote-ban has already been opened for this user!'
     },
     ['weather'] = {
         ['1'] = 'Konum ayarlamadın. /setloc <konum> komutunu kullanarak bir tane ayarla.',

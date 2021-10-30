@@ -6,7 +6,7 @@
 -- THESE ARE PLACEHOLDERS!
 
 -- DO NOT CHANGE ANY MARKDOWN/HTML FORMATTING!
--- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/mattataDev)
+-- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/flaunt_and_dither)
 
 return {
     ['errors'] = {
@@ -176,9 +176,6 @@ return {
         ['2'] = '"%s" was an unexpected word!',
         ['3'] = 'You cannot have a unit before a number!'
     },
-    ['captionbotai'] = {
-        ['1'] = 'Ich kann das Bild wirklich nicht beschreiben!'
-    },
     ['cats'] = {
         ['1'] = 'Miau!'
     },
@@ -213,10 +210,6 @@ return {
         ['2'] = '<b>Befehl Statistiken für:</b> %s\n\n%s\n<b>Summe der gesendeten Befehle:</b> %s',
         ['3'] = 'Die Befehl Statistiken für diese Unterhaltung wurden gelöscht!',
         ['4'] = 'Ich konnte die Befehl Statistiken für diese Unterhaltung nicht löschen. Wurden sie vielleicht schon gelöscht?'
-    },
-    ['control'] = {
-        ['1'] = 'Pfft, wie du willst!',
-        ['2'] = '%s ist am Neuladen...'
     },
     ['copypasta'] = {
         ['1'] = 'Der Antowrten-zu text kann nicht länger sein als %s Zeichen!'
@@ -258,7 +251,7 @@ return {
         ['1'] = 'Bitte gebe den text ein welchen du in Doge-ify sehen willst. Jeder Satz sollte getrennt sein mit Schrägstrich oder neue Zeile..'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mattata project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mattata. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="https://paypal.me/wrxck">here</a>. Thank you for your continued support!'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['duckduckgo'] = {
         ['1'] = 'Ich bin nicht sicher was das ist!'
@@ -268,20 +261,6 @@ return {
         ['2'] = 'Nein.',
         ['3'] = 'Es ist warscheinlich so.',
         ['4'] = 'Also... Wenn ich du wäre würde ich später noch mal fragen.'
-    },
-    ['exec'] = {
-        ['1'] = 'Bitte wähle die Sprache in der dein Code ausgeführt werden soll:',
-        ['2'] = 'Ein Fehler ist aufgetreten! Die Verbindung ist unterbrochen. Hast du versucht mich langsamer zu machen?',
-        ['3'] = 'Du hast ausgewählt: "%s" – bist du sicher?',
-        ['4'] = 'Zurück',
-        ['5'] = 'Ich bin sicher',
-        ['6'] = 'Bitte gebe den Schnipsel Code ein, welchen du durchführen willst. Du must keine Sprache wählen, wir machen das später!',
-        ['7'] = 'Bitte wähle die Sprache in der dein Code ausgeführt werden soll:'
-    },
-    ['facebook'] = {
-        ['1'] = 'Ein Fehler ist aufgetreten!',
-        ['2'] = 'Bitte gebe den Namen von dem Facebook Benutzer ein, von welchem du ein Profilbild bekommen willst.',
-        ['3'] = 'Schaue @%s in Facebook an'
     },
     ['fact'] = {
         ['1'] = 'Generiere nochmal'
@@ -317,9 +296,6 @@ return {
         ['1'] = 'Bitte Antworte-zu dem Benutzer, welchen du global auf der schwarzen Liste haben möchtest, oder gebe ihn/sie mit Benutzername/Identifikationsnummer an.',
         ['2'] = 'Ich kann keine Information über "%s" finden, bitte prüfe nach ob der Benutzername/Identifikationsnummer gültig ist und versuche es noch einmal.',
         ['3'] = 'Das ist ein/e %s, aber kein Benutzer!'
-    },
-    ['gif'] = {
-        ['1'] = 'Bitte gebe einen Suchbegriff ein (das ist, was ich in GIPHY für dich suchen soll, d.h. "Katze" will ein GIF von einer Katze senden).'
     },
     ['gallowlist'] = {
         ['1'] = 'Bitte Antworte-zu dem Benutzer, welchen du global auf der weißen Liste haben möchtest, oder gebe ihn/sie mit Benutzername/Identifikationsnummer an.',
@@ -443,9 +419,6 @@ System:
         ['9'] = 'iPad',
         ['10'] = 'Apple TV'
     },
-    ['ispwned'] = {
-        ['1'] = 'Dieses Konto wurde in folgenden undichten Stellen gefunden:'
-    },
     ['itunes'] = {
         ['1'] = 'Name:',
         ['2'] = 'Artist:',
@@ -492,11 +465,6 @@ System:
     ['lua'] = {
         ['1'] = 'bitte gebe eine Reihe von Lua ein zum ausführen!'
     },
-    ['lyrics'] = {
-        ['1'] = 'Spotify',
-        ['2'] = 'Zeige Liedtext',
-        ['3'] = 'Bitte gebe einen Suchbegriff ein (das ist, zu welchem Lied/Sänger/Gruppe ich den Liedtext suchen soll, d.h. "Green Day Basket Case" gibt dir den Liedtext zu dem Lied song Basket Case von Green Day).'
-    },
     ['minecraft'] = {
         ['1'] = '<b>%s hat den Benutzernamen %s mal gewechselt</b>',
         ['2'] = '<b>%s hat den Benutzernamen %s mal gewechselt</b>',
@@ -538,10 +506,9 @@ System:
         ['18'] = 'Beim erneuten Autorisieren deines Spotify Accounts ist ein Fehler aufgetreten!',
         ['19'] = 'Dein Spotify Account wurde erneut erfolgreich Autorisiert! Deine orginal Anfrage wird bearbeitet...',
         ['20'] = 'Erneutes Autorisieren deines Spotify Accounts, bitte warten...',
-        ['21'] = 'Zum verbinden deines Spotify Accounts musst du mattata autorisieren. Klick [hier](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) and press the green "OKAY" button to link mattata to your Spotify account. After you\'ve done that, send the link you were redirected to (it should begin with "%s", followed by a unique code) in reply to this message.',
+        ['21'] = 'Zum verbinden deines Spotify Accounts musst du mich autorisieren. Klick [hier](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) and press the green "OKAY" button to link mattata to your Spotify account. After you\'ve done that, send the link you were redirected to (it should begin with "%s", followed by a unique code) in reply to this message.',
         ['22'] = 'Wiedergabeliste',
         ['23'] = 'Benutze Inline Mode',
-        ['24'] = 'Lyrics',
         ['25'] = 'Keine Geräte gefunden.',
         ['26'] = 'Es sieht so aus, als wenn du keine Wiedergabeliste hast.',
         ['27'] = 'Deine Wiedergabeliste',
@@ -561,15 +528,6 @@ System:
         ['41'] = 'Die Lautstärke wurde auf %s%% eingestellt!',
         ['42'] = 'Dies Nachricht benutzt ein altes Plugin, zum anfragen eines neues bitte sende /myspotify!'
     },
-    ['name'] = {
-        ['1'] = 'Der Name auf den ich im moment antworte ist "%s" - zum ändern, benutze /name <text> ( <text> ist der Name auf den du willst, dass ich andworte).',
-        ['2'] = 'Mein neuer Name muss zwischen 2 und 32 Buchstaben lang sein!',
-        ['3'] = 'Mein Name kann nur aus Buchstaben bestehen!',
-        ['4'] = 'Ich antworten nun auf "%s", und nicht mehr auf "%s" - zum ändern, benutze /name <text> ( <text> ist der Name auf den du willst, dass ich andworte).'
-    },
-    ['netflix'] = {
-        ['1'] = 'Mehr lesen.'
-    },
     ['news'] = {
         ['1'] = '"<code>%s</code>" ist kein gültiges Lua Muster.',
         ['2'] = 'Ich konnte keine Quellenliste bekommen.',
@@ -587,22 +545,6 @@ System:
         ['1'] = 'Dein Spitzname is vergessen!',
         ['2'] = 'Dein Spitzname wurde geändert zu "%s"!'
     },
-    ['optout'] = {
-        ['1'] = 'Du bist opted-in(beigetreten), dass die Daten, welche du sendest, gesammelt werden! Benutze /optout zum opt-out(austreten).',
-        ['2'] = 'Du bist opted-out(ausgetreten), dass die Daten, welche du sendest, gesammelt werden! Benutze /optin zum opt-in(beitreten).'
-    },
-    ['paste'] = {
-        ['1'] = 'Bitte suche einen Service aus zum hochladen und einfügen deines Textes:'
-    },
-    ['pay'] = {
-        ['1'] = 'Du hast im Moment %s mattacoins. Verdiene mehr wenn du das Spiel Tic-Tac-Toe gewinnst. Benutze /game - Du gewinnst 100 mattacoins für jedes gewonnene Spiel und du verlierst 50 für jedes verlorene Spiel.',
-        ['2'] = 'Du musst diesen Befehl benutzen als Antwort zu dem Benutzer dem du mattacoins senden willst.',
-        ['3'] = 'Bitte gebe die Menge der mattacoins an, welche du zu %s senden möchtest.',
-        ['4'] = 'Die Menge sollte in einer Zahl angegeben sein, welche nicht kleiner als 0 sein kann.',
-        ['5'] = 'Du kannst kein Geld zu dir selbst schicken!',
-        ['6'] = 'Du hast nicht genug Guthaben zum durchführen der Transaktion!',
-        ['7'] = '%s mattacoins wurden gesendet zu %s. Dein neues Guthaben ist %s mattacoins.'
-    },
     ['pin'] = {
         ['1'] = 'Du hast noch keinen pin gesetzt. Benutze /pin <dein Text> um deinen Text zu pinnen. Markdown formatierung ist verfügbar.',
         ['2'] = 'Hier ist die letzte nachricht die mit /pin generiert wurde',
@@ -614,11 +556,6 @@ System:
     ['pokedex'] = {
         ['1'] = 'Name: %s\nID: %s\nArt: %s\nBeschreibung: %s'
     },
-    ['prime'] = {
-        ['1'] = 'Bitte gebe eine Zahl zwischen 1 und 99999 ein.',
-        ['2'] = '%s ist eine Primzahl!',
-        ['3'] = '%s ist KEINE Primzahl...'
-    },
     ['promote'] = {
         ['1'] = 'Ich kann diesen Benutzer nicht beförderen, weil er/sie Moderator oder Administrator in dieser Gruppe ist.',
         ['2'] = 'Ich kann diesen Benutzer nicht beförderen, weil er/sie hat die Gruppe schon verlassen hat.',
@@ -628,22 +565,12 @@ System:
         ['1'] = 'Dieser Benutzer ist opted out(ausgetreten) von der Datensammlung funktionalität.',
         ['2'] = 'Da sind keine Zitate von %s%s! Du kannst Zitate speichern wenn du /save als Antwort zu dem gesendeten text(welchen du als Zitat speichern willst).'
     },
-    ['randomsite'] = {
-        ['1'] = 'Generiere nochmal'
-    },
-    ['randomword'] = {
-        ['1'] = 'Generiere nochmal',
-        ['2'] = 'Dein zufälliges Wort ist <b>%s</b>!'
-    },
     ['report'] = {
         ['1'] = 'Bitte Antworte zu der Nachricht die du einem GruppenAdminsitrator melden möchtest.',
         ['2'] = 'Du kannst deine eigenen Nachrichten nicht melden, machst du vielleicht Witze?',
         ['3'] = '<b>%s braucht Hilfe in %s!</b>',
         ['4'] = 'Klicke hier zum ansehen der gemeldeten Nachricht.',
         ['5'] = 'Ich habe die Nachricht erfolgreich gemeldet zu %s admin(s)!'
-    },
-    ['rms'] = {
-        ['1'] = 'Heiliges GNU!'
     },
     ['save'] = {
         ['1'] = 'Dieser Benutzer ist opted out(ausgetreten) von der Datensammlung funktionalität.',
@@ -672,10 +599,6 @@ System:
         ['1'] = 'Deine Sprache wurde eingestellt zu %s!',
         ['2'] = 'Deine Sprache ist im Moment eingestellt zu %s.\nBitte beachte, dass manche Wörter oder Sätze noch nicht übersetzet sind. Wenn du deine Sprache ändern möchtest, suche dir eine aus in der Tastatur unten:'
     },
-    ['setlink'] = {
-        ['1'] = 'Das ist keine gültige URL.',
-        ['2'] = 'Link erfolgreich gesetzt!'
-    },
     ['setrules'] = {
         ['1'] = 'Ungültige Markdown-Formatierung.',
         ['2'] = 'Neue Regeln erfolgreich eingestellt!'
@@ -688,14 +611,6 @@ System:
     ['share'] = {
         ['1'] = 'Teilen'
     },
-    ['shorten'] = {
-        ['1'] = 'Bitte wähle einen URL Verkürzer aus mit den Buttons unten:'
-    },
-    ['shsh'] = {
-        ['1'] = 'Für den ECID konnte ich keine SHSH blobs holen. Bitte mache sicher, dass sie gültig sind und das to sie gespeichert hast auf https://tsssaver.1conan.com.',
-        ['2'] = 'SHSH blobs sind verfügbar für das Gerät mit der folgenden Version von iOS:\n',
-        ['3'] = 'Download .zip'
-    },
     ['statistics'] = {
         ['1'] = 'Es wurden keine Nachrichten in dieser Unterhaltung gesendet!',
         ['2'] = '<b>Statistiken für:</b> %s\n\n%s\n<b>Summe der gesendeten Nachrichten:</b> %s',
@@ -707,15 +622,6 @@ System:
         ['2'] = '"%s" ist kein gültiger Steam Benutzername.',
         ['3'] = '%s ist ein Steam Benutzer seit %s, in %s. Er/Sie hat sich das letzte mal ausgelogt am %s, in %s. Klick <a href="%s">here</a> zum ansehen von deren Steam Profil.',
         ['4'] = '%s, alias "%s",'
-    },
-    ['synonym'] = {
-        ['1'] = 'Du könntest das Wort <b>%s</b> benutzen, wäre besser als %s.'
-    },
-    ['thoughts'] = {
-        ['1'] = '%s\n\nPositive: <code>%s%% [%s]</code>\nNegative: <code>%s%% [%s]</code>\nGleichgültige: <code>%s%% [%s]</code>\nSumme Gedanken: <code>%s</code>'
-    },
-    ['tobinary'] = {
-        ['1'] = 'Bitte gebe ein Wort oder Satz ein, welchen du umwandeln willst zu Binary.'
     },
     ['trust'] = {
         ['1'] = 'Ich kann den Benutzer nicht zu trust(vertrauen) einstellen, weil er Moderator oder Administrator in dieser Gruppe ist.',
@@ -734,30 +640,8 @@ System:
         ['3'] = 'Ich kann den Benutzer nicht zu untrust(nicht vertrauen) einstellen, weil er die Gruppe schon verlassen hat.',
         ['4'] = 'Ich kann den Benutzer nicht zu untrust(nicht vertrauen) einstellen, weil er von dieser Gruppe entfernt wurde.'
     },
-    ['upload'] = {
-        ['1'] = 'Bitte antworte zu der Datei, welche du hochlanden willst zum Server. Sie muss <= 20 MB sein.',
-        ['2'] = 'Die Datei ist zu groß. Sie muss <= 20 MB sein.',
-        ['3'] = 'Ich konnte die Datei nicht bekommen, wahrscheinlich ist sie zu alt.',
-        ['4'] = 'Es ist ein Fehler aufgetreten beim abrufen der Datei.',
-        ['5'] = 'Die Datei wurde erfolgreich hochgelanden zum Server - sie kan gefunden werden mit <code>%s</code>!'
-    },
     ['version'] = {
-        ['1'] = '@%s alias %s `[%s]` läuft mit mattata %s, kreiert von [Matthew Hesketh](https://t.me/wrxck). Der Quellcode ist auf [GitHub](https://github.com/wrxck/mattata) zu bekommen.'
-    },
-    ['voteban'] = {
-        ['1'] = 'Für welchen Benutzer möchtest einen vote-ban(Wahl zur Sperre) eröffnen? Gebe den Benutzer mit dem @Benutzername oder der Identifikationsnummer an.',
-        ['2'] = 'Ich kann keinen vote-ban(Wahl zur Sperre) für diesen Benutzer aufsetzen, weil er Moderator oder Administrator in dieser Gruppe ist.',
-        ['3'] = 'Ich kann keinen vote-ban(Wahl zur Sperre) für diesen Benutzer aufsetzen, weil er die Gruppe schon verlassen hat oder von der Gruppe entfernt wurde.',
-        ['4'] = 'Soll %s [%s] gesperrt werden von %s? %s dafür(Yes) werden gebraucht für eine sofortige Sperre und %s dagegen(No) werden gebraucht zum sofortigen schliessen der Wahl.',
-        ['5'] = 'Ja [%s]',
-        ['6'] = 'Nein [%s]',
-        ['7'] = 'Die Leute haben gesprochen. Ich have %s [%s] von %s gesperrt, weil %s Leute dafür gewählt haben.',
-        ['8'] = 'Der erfordliche Anzahl dafür wurde erreicht, aber es war mir nicht möglich %s zu sperren - vielleicht hat er/sie die Gruppe schon verlassen oder wurde befördert seit die Wahl eröffnet wurde? Es ist entweder das, oder ich habe keine Administrationsrechte mehr.',
-        ['9'] = 'Die Leute haben gesprochen. Ich habe %s [%s] nicht von %s gesperrt, weil %s Leute dagegen gewählt haben.',
-        ['10'] = 'Du hast dafür gewählt %s [%s] zu sperren!',
-        ['11'] = 'Deine Wahl wurde zurückgezogen,zum eingeben einer neuen Wahl benutze die Knöpfe nocheinmal.',
-        ['12'] = 'Du hast dagegen gewählt %s [%s] zu sperren!',
-        ['13'] = 'Eine Wahl zum bannen des Benutzers wurde schon eröffnet!'
+        ['1'] = '@%s alias %s `[%s]` läuft mit mafflebot %s, kreiert von Chris. Der Quellcode ist auf [GitHub](https://github.com/wrxck/mattata) zu bekommen.'
     },
     ['weather'] = {
         ['1'] = 'Du hast keinen Standort ausgewählt. Zum auswählen benutze /setloc <Standort>.',

@@ -6,7 +6,7 @@
 -- THESE ARE PLACEHOLDERS!
 
 -- DO NOT CHANGE ANY MARKDOWN/HTML FORMATTING!
--- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/mattataDev)
+-- IF YOU ARE UNSURE, ASK ON TELEGRAM (t.me/flaunt_and_dither)
 
 return {
     ['errors'] = {
@@ -176,9 +176,6 @@ return {
         ['2'] = '"%s" was an unexpected word!',
         ['3'] = 'You cannot have a unit before a number!'
     },
-    ['captionbotai'] = {
-        ['1'] = 'I really cannot describe that picture!'
-    },
     ['cats'] = {
         ['1'] = 'Meow!'
     },
@@ -214,10 +211,6 @@ return {
         ['3'] = 'The command statistics for this chat have been reset!',
         ['4'] = 'I could not reset the command statistics for this chat. Perhaps they have already been reset?'
     },
-    ['control'] = {
-        ['1'] = 'Pfft, you wish!',
-        ['2'] = '%s is reloading...'
-    },
     ['copypasta'] = {
         ['1'] = 'The replied-to text musn\'t be any longer than %s characters!'
     },
@@ -230,9 +223,6 @@ return {
 *Total deaths:* %s
 *New recovered cases:* %s
 *Total recovered cases:* %s]]
-    },
-    ['counter'] = {
-        ['1'] = 'I couldn\'t add a counter to that message!'
     },
     ['custom'] = {
         ['1'] = 'Success! That message will now be sent every time somebody uses %s!',
@@ -261,7 +251,7 @@ return {
         ['1'] = 'Please enter the text you want to Doge-ify. Each sentence should be separated using slashes or new lines.'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mattata project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mattata. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="https://paypal.me/wrxck">here</a>. Thank you for your continued support!'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['duckduckgo'] = {
         ['1'] = 'I\'m not sure what that is!'
@@ -271,20 +261,6 @@ return {
         ['2'] = 'No.',
         ['3'] = 'It is likely so.',
         ['4'] = 'Well, uh... I\'d ask again later, if I were you.'
-    },
-    ['exec'] = {
-        ['1'] = 'Please select the language you would like to execute your code in:',
-        ['2'] = 'An error occured! The connection timed-out. Were you trying to make me lag?',
-        ['3'] = 'You have selected "%s" – are you sure?',
-        ['4'] = 'Back',
-        ['5'] = 'I\'m sure',
-        ['6'] = 'Please enter a snippet of code that you would like to run. You don\'t need to specify the language, we will do that afterwards!',
-        ['7'] = 'Please select the language you would like to execute your code in:'
-    },
-    ['facebook'] = {
-        ['1'] = 'An error occured!',
-        ['2'] = 'Please enter the name of the Facebook user you would like to get the profile picture of.',
-        ['3'] = 'View @%s on Facebook'
     },
     ['fact'] = {
         ['1'] = 'Generate Another'
@@ -297,13 +273,6 @@ return {
         ['1'] = 'You searched for:',
         ['2'] = 'Please enter a search query (that is, what you want me to search Flickr for, i.e. "Big Ben" will return a photograph of Big Ben in London).',
         ['3'] = 'More Results'
-    },
-    ['fortune'] = {
-        ['1'] = 'Click to send your fortune!'
-    },
-    ['frombinary'] = {
-        ['1'] = 'Please enter the binary value you would like to convert to a string.',
-        ['2'] = 'Malformed binary!'
     },
     ['game'] = {
         ['1'] = 'Total wins: %s\nTotal losses: %s\nBalance: %s mattacoins',
@@ -327,14 +296,6 @@ return {
         ['1'] = 'Please reply-to the user you\'d like to globally blocklist, or specify them by username/ID.',
         ['2'] = 'I couldn\'t get information about "%s", please check it\'s a valid username/ID and try again.',
         ['3'] = 'That\'s a %s, not a user!'
-    },
-    ['gif'] = {
-        ['1'] = 'Please enter a search query (that is, what you want me to search GIPHY for, i.e. "cat" will return a GIF of a cat).'
-    },
-    ['godwords'] = {
-        ['1'] = 'Please enter a numerical value, between 1 and 64!',
-        ['2'] = 'That number is too small, please specify one between 1 and 64!',
-        ['3'] = 'That number is too large, please specify one between 1 and 64!'
     },
     ['gallowlist'] = {
         ['1'] = 'Please reply-to the user you\'d like to globally allowlist, or specify them by username/ID.',
@@ -458,9 +419,6 @@ System:
         ['9'] = 'iPad',
         ['10'] = 'Apple TV'
     },
-    ['ispwned'] = {
-        ['1'] = 'That account was found in the following leaks:'
-    },
     ['isup'] = {
         ['1'] = 'This website appears to be up, maybe it\'s just you?',
         ['2'] = 'That doesn\'t appear to be a valid site!',
@@ -515,11 +473,6 @@ System:
     ['lua'] = {
         ['1'] = 'Please enter a string of Lua to execute!'
     },
-    ['lyrics'] = {
-        ['1'] = 'Spotify',
-        ['2'] = 'Show Lyrics',
-        ['3'] = 'Please enter a search query (that is, what song/artist/lyrics you want me to get lyrics for, i.e. "Green Day Basket Case" will return the lyrics for the song Basket Case by Green Day).'
-    },
     ['minecraft'] = {
         ['1'] = '<b>%s has changed his/her username %s time</b>',
         ['2'] = '<b>%s has changed his/her username %s times</b>',
@@ -532,11 +485,6 @@ System:
         ['9'] = 'Please select an option:',
         ['10'] = 'Please enter the username of the Minecraft player you would like to view information about (i.e. sending "Notch" will view information about the player Notch).',
         ['11'] = 'Minecraft usernames are between 3 and 16 characters long.'
-    },
-    ['msglink'] = {
-        ['1'] = 'You can only use this command in supergroups and channels.',
-        ['2'] = 'This %s must be public, with a @username.',
-        ['3'] = 'Please reply to the message you\'d like to get a link for.'
     },
     ['mute'] = {
         ['1'] = 'Which user would you like me to mute? You can specify this user by their @username or numerical ID.',
@@ -566,10 +514,9 @@ System:
         ['18'] = 'An error occured whilst re-authorising your Spotify account!',
         ['19'] = 'Successfully re-authorised your Spotify account! Processing your original request...',
         ['20'] = 'Re-authorising your Spotify account, please wait...',
-        ['21'] = 'You need to authorise mattata in order to connect your Spotify account. Click [here](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) and press the green "OKAY" button to link mattata to your Spotify account. After you\'ve done that, send the link you were redirected to (it should begin with "%s", followed by a unique code) in reply to this message.',
+        ['21'] = 'You need to authorise me in order to connect your Spotify account. Click [here](https://accounts.spotify.com/en/authorize?client_id=%s&response_type=code&redirect_uri=%s&scope=user-library-read,playlist-read-private,playlist-read-collaborative,user-read-private,user-read-email,user-follow-read,user-top-read,user-read-playback-state,user-read-recently-played,user-read-currently-playing,user-modify-playback-state) and press the green "OKAY" button to link mattata to your Spotify account. After you\'ve done that, send the link you were redirected to (it should begin with "%s", followed by a unique code) in reply to this message.',
         ['22'] = 'Playlists',
         ['23'] = 'Use Inline Mode',
-        ['24'] = 'Lyrics',
         ['25'] = 'No devices were found.',
         ['26'] = 'You don\'t appear to have any playlists.',
         ['27'] = 'Your Playlists',
@@ -589,15 +536,6 @@ System:
         ['41'] = 'The volume has been set to %s%%!',
         ['42'] = 'This message is using an old version of this plugin, please request a new one by sending /myspotify!'
     },
-    ['name'] = {
-        ['1'] = 'The name I currently respond to is "%s" - to change this, use /name <text> (where <text> is what you want me to respond to).',
-        ['2'] = 'My new name needs to be between 2 and 32 characters long!',
-        ['3'] = 'My name may only contain alphanumeric characters!',
-        ['4'] = 'I will now respond to "%s", instead of "%s" - to change this, use /name <text> (where <text> is what you want me to respond to).'
-    },
-    ['netflix'] = {
-        ['1'] = 'Read more.'
-    },
     ['news'] = {
         ['1'] = '"<code>%s</code>" isn\'t a valid Lua pattern.',
         ['2'] = 'I couldn\'t retrieve a list of sources.',
@@ -615,25 +553,6 @@ System:
         ['1'] = 'Your nickname has now been forgotten!',
         ['2'] = 'Your nickname has been set to "%s"!'
     },
-    ['ninegag'] = {
-        ['1'] = 'Read More'
-    },
-    ['optout'] = {
-        ['1'] = 'You have opted-in to having data you send collected! Use /optout to opt-out.',
-        ['2'] = 'You have opted-out of having data you send collected! Use /optin to opt-in.'
-    },
-    ['paste'] = {
-        ['1'] = 'Please select a service to upload your paste to:'
-    },
-    ['pay'] = {
-        ['1'] = 'You currently have %s mattacoins. Earn more by winning games of Tic-Tac-Toe, using /game - You will win 100 mattacoins for every game you win, and you will lose 50 for every game you lose.',
-        ['2'] = 'You must use this command in reply to the user you\'d like to send mattacoins to.',
-        ['3'] = 'Please specify the amount of mattacoins you\'d like to give %s.',
-        ['4'] = 'The amount specified should be a numerical value, of which can be no less than 0.',
-        ['5'] = 'You can\'t send money to yourself!',
-        ['6'] = 'You don\'t have enough funds to complete that transaction!',
-        ['7'] = '%s mattacoins have been sent to %s. Your new balance is %s mattacoins.'
-    },
     ['pin'] = {
         ['1'] = 'You haven\'t set a pin before. Use /pin <text> to set one. Markdown formatting is supported.',
         ['2'] = 'Here is the last message generated using /pin.',
@@ -645,11 +564,6 @@ System:
     ['pokedex'] = {
         ['1'] = 'Name: %s\nID: %s\nType: %s\nDescription: %s'
     },
-    ['prime'] = {
-        ['1'] = 'Please enter a number between 1 and 99999.',
-        ['2'] = '%s is a prime number!',
-        ['3'] = '%s is NOT a prime number...'
-    },
     ['promote'] = {
         ['1'] = 'I cannot promote this user because they are a moderator or an administrator of this chat.',
         ['2'] = 'I cannot promote this user because they have already left this chat.',
@@ -659,22 +573,12 @@ System:
         ['1'] = 'This user has opted out of data-storing functionality.',
         ['2'] = 'There are no saved quotes for %s! You can save one by using /save in reply to a message they send.'
     },
-    ['randomsite'] = {
-        ['1'] = 'Generate Another'
-    },
-    ['randomword'] = {
-        ['1'] = 'Generate Another',
-        ['2'] = 'Your random word is <b>%s</b>!'
-    },
     ['report'] = {
         ['1'] = 'Please reply to the message you would like to report to the group\'s administrators.',
         ['2'] = 'You can\'t report your own messages, are you just trying to be funny?',
         ['3'] = '<b>%s needs help in %s!</b>',
         ['4'] = 'Click here to view the reported message.',
         ['5'] = 'I\'ve successfully reported that message to %s admin(s)!'
-    },
-    ['rms'] = {
-        ['1'] = 'Holy GNU!'
     },
     ['save'] = {
         ['1'] = 'This user has opted out of data-storing functionality.',
@@ -685,7 +589,7 @@ System:
         ['2'] = '%s\n\n<i>%s has admitted defeat.</i>',
         ['3'] = '%s\n\n<i>%s isn\'t sure if they were mistaken...</i>',
         ['4'] = 'Screw you, <i>when am I ever wrong?</i>',
-        ['5'] = '"<code>%s</code>" isn\'t a valid Lua pattern.',
+        ['5'] = '"<code>%s</code>" isn\'t a valid PCRE pattern.',
         ['6'] = 'Hey %s, %s seems to think you meant:\n<i>%s</i>',
         ['7'] = 'Yes',
         ['8'] = 'No',
@@ -703,10 +607,6 @@ System:
         ['1'] = 'Your language has been set to %s!',
         ['2'] = 'Your language is currently %s.\nPlease note that some strings may not be translated as of yet. If you\'d like to change your language, select one using the keyboard below:'
     },
-    ['setlink'] = {
-        ['1'] = 'That\'s not a valid URL.',
-        ['2'] = 'Link set successfully!'
-    },
     ['setrules'] = {
         ['1'] = 'Invalid Markdown formatting.',
         ['2'] = 'Successfully set the new rules!'
@@ -719,14 +619,6 @@ System:
     ['share'] = {
         ['1'] = 'Share'
     },
-    ['shorten'] = {
-        ['1'] = 'Please select a URL shortener using the buttons below:'
-    },
-    ['shsh'] = {
-        ['1'] = 'I couldn\'t fetch any SHSH blobs for that ECID, please ensure it\'s valid and you have saved them using https://tsssaver.1conan.com.',
-        ['2'] = 'SHSH blobs for that device are available for the following versions of iOS:\n',
-        ['3'] = 'Download .zip'
-    },
     ['statistics'] = {
         ['1'] = 'No messages have been sent in this chat!',
         ['2'] = '<b>Statistics for:</b> %s\n\n%s\n<b>Total messages sent:</b> %s',
@@ -738,15 +630,6 @@ System:
         ['2'] = '"%s" isn\'t a valid Steam username.',
         ['3'] = '%s has been a user on Steam since %s, on %s. They last logged off at %s, on %s. Click <a href="%s">here</a> to view their Steam profile.',
         ['4'] = '%s, AKA "%s",'
-    },
-    ['synonym'] = {
-        ['1'] = 'You could use the word <b>%s</b>, instead of %s.'
-    },
-    ['thoughts'] = {
-        ['1'] = '%s\n\nPositive: <code>%s%% [%s]</code>\nNegative: <code>%s%% [%s]</code>\nIndifferent: <code>%s%% [%s]</code>\nTotal thoughts: <code>%s</code>'
-    },
-    ['tobinary'] = {
-        ['1'] = 'Please enter the string you would like to convert to binary.'
     },
     ['trust'] = {
         ['1'] = 'I cannot trust this user because they are a moderator or an administrator of this chat.',
@@ -765,30 +648,8 @@ System:
         ['3'] = 'I cannot untrust this user because they have already left this chat.',
         ['4'] = 'I cannot untrust this user because they have already been kicked from this chat.'
     },
-    ['upload'] = {
-        ['1'] = 'Please reply to the file you\'d like to download to the server. It must be <= 20 MB.',
-        ['2'] = 'That file is too large. It must be <= 20 MB.',
-        ['3'] = 'I couldn\'t get this file, it\'s probably too old.',
-        ['4'] = 'There was an error whilst retrieving this file.',
-        ['5'] = 'Successfully downloaded the file to the server - it can be found at <code>%s</code>!'
-    },
     ['version'] = {
-        ['1'] = '@%s AKA %s `[%s]` is running mattata %s, created by [Matthew Hesketh](https://t.me/wrxck). The source code is available on [GitHub](https://github.com/wrxck/mattata).'
-    },
-    ['voteban'] = {
-        ['1'] = 'Which user would you like to open up a vote-ban for? You can specify this user by their @username or numerical ID.',
-        ['2'] = 'I cannot setup a vote-ban for this user because they are a moderator or an administrator in this chat.',
-        ['3'] = 'I cannot setup a vote-ban for this user because they have already left (or been kicked from) this chat.',
-        ['4'] = 'Should %s [%s] be banned from %s? %s upvotes are required for an immediate ban, and %s downvotes are required for this vote to be closed.',
-        ['5'] = 'Yes [%s]',
-        ['6'] = 'No [%s]',
-        ['7'] = 'The people have spoken. I have banned %s [%s] from %s because %s people voted for me to do so.',
-        ['8'] = 'The required upvote amount was reached, however, I was unable to ban %s - perhaps they\'ve left the group or been promoted since we opened the vote to ban them? It\'s either that, or I no longer have the administrative privileges required in order to perform this action!',
-        ['9'] = 'The people have spoken. I haven\'t banned %s [%s] from %s because the required %s people downvoted the decision to ban them.',
-        ['10'] = 'You upvoted the decision to ban %s [%s]!',
-        ['11'] = 'Your current vote has been retracted, use the buttons again to re-submit your vote.',
-        ['12'] = 'You downvoted the decision to ban %s [%s]!',
-        ['13'] = 'A vote-ban has already been opened for this user!'
+        ['1'] = '@%s AKA %s `[%s]` is running mafflebot %s, created by Chris. The source code is available on [GitHub](https://github.com/wrxck/mattata).'
     },
     ['weather'] = {
         ['1'] = 'You don\'t have a location set. Use /setloc <location> to set one.',
