@@ -294,7 +294,7 @@ end
 function utils.log_error(error_message)
     error_message = tostring(error_message):gsub('%%', '%%%%')
     local output = string.format('%s[31m[Error] %s%s[0m', string.char(27), error_message, string.char(27))
-    print(output)
+    io.stderr:write(output)
 end
 
 function utils.set_command_action(chat_id, message_id, command)

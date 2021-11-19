@@ -29,16 +29,16 @@ redis.commands.hgetall = redis.command('hgetall', {
 })
 
 if not configuration.redis then
-    print('The redis table could not be found in configuration.lua!')
+    io.stderr:write('The redis table could not be found in configuration.lua!')
     return false
 elseif not configuration.redis.host then
-    print('Please specify the host address of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 127.0.0.1.')
+    io.stderr:write('Please specify the host address of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 127.0.0.1.')
     return false
 elseif not configuration.redis.port then
-    print('Please specify the port of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 6379.')
+    io.stderr:write('Please specify the port of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 6379.')
     return false
 elseif tonumber(configuration.redis.port) == nil then
-    print('The value of port in the redis table of configuration.lua must be numerical!')
+    io.stderr:write('The value of port in the redis table of configuration.lua must be numerical!')
     return false
 end
 
@@ -51,13 +51,13 @@ local success = pcall(function()
 end)
 
 if not success then
-    print('An error has occured whilst connecting to redis!')
+    io.stderr:write('An error has occured whilst connecting to redis!')
     return false
 end
 
 if configuration.redis.db and configuration.redis.db ~= '' then
     if tonumber(configuration.redis.db) == nil then
-        print('The value of db in the redis table of configuration.lua must be numerical!')
+        io.stderr:write('The value of db in the redis table of configuration.lua must be numerical!')
         return false
     end
     redis:select(
