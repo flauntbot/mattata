@@ -12,22 +12,26 @@ function responses:init()
         ['night'] = {
             '^go?o?d? ?night$',
             '^g?night$',
-            '^gn$'
+            '^[g][n]$'
         },
         ['morning'] = {
             '^go?o?d ?morning?$',
             '^morning?$',
-            '^just woken? up'
+            '^just woken? up',
+            '^[g][m]$'
         },
         ['yesno'] = {
             '^' .. self.info.name .. ',? do .-%??$',
             '^' .. self.info.name .. ',? [sc]h?ould .-%??$',
             '^' .. self.info.name .. ',? are .-%??$',
             '^' .. self.info.name .. ',? is .-%??$',
-            ' y/n$'
+            '^' .. self.info.name .. ',? am .-%??$',
+            '^[s]h?ould',
+            '[y]/[n]%??$',
+            '[y]es/[n]o%??$'
         },
         ['iam'] = {
-            '^[Ii][\'' .. utf8.char(8217) .. '%s]?[AaMm][Mm]?[\n ](%a+)$'
+            '^[i][\'' .. utf8.char(8217) .. '%s]?[am][m]?[\n ](%a+)$'
         }
     }
 end
@@ -63,9 +67,6 @@ function responses:on_new_message(message)
                 return
             end
         end
-    end
-    if message.text:lower():match('feeling? sexy') then
-        return mattata.send_voice(message.chat.id, 'AwACAgQAAxkBAAIYwV7ZmESphxCW9E0ZSH4st2WY9ladAAJWOAACuxlkB_VheSVS_OpcGgQ', utf8.char(128521), nil, 9)
     end
     return false
 end
