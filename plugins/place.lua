@@ -25,7 +25,7 @@ function place:on_inline_query(inline_query, configuration)
 	    is_phone = true
     end
     local jdat, lat, lng = place.get(input, is_phone, configuration.keys.maps)
-	if not jdat then
+	if not jdat or type(jdat) == 'boolean' then
 	    return false, lat
 	end
     return mattata.answer_inline_query(
