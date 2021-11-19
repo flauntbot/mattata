@@ -9,7 +9,7 @@ if next(disabled_plugin_keys) then
                     if tostring(value) == 'true' then
                         local chat_id = v:match(':(%-?%d+):')
                         redis:sadd('disabled_plugins:' .. chat_id, plugin:lower())
-                        print('Migrated disabled plugin "' .. plugin.lower() .. '" for ' .. chat_id)
+                        io.stderr:write('Migrated disabled plugin "' .. plugin.lower() .. '" for ' .. chat_id)
                     end
                 end
             end
