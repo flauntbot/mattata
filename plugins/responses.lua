@@ -68,6 +68,10 @@ function responses:on_new_message(message)
             end
         end
     end
+    if message.text:lower():match('feeling? sexy') then
+        -- this file id will work for your bot if you forward it the message at https://t.me/c/1087770450/80324 first
+        return mattata.send_voice(message.chat.id, 'AwACAgQAAxkBAAIYwV7ZmESphxCW9E0ZSH4st2WY9ladAAJWOAACuxlkB_VheSVS_OpcGgQ', utf8.char(128521), nil, 9)
+    end
     return false
 end
 
