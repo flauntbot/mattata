@@ -92,12 +92,12 @@ function mattata:init()
         self.inline_plugin_list = inline_plugin_list
         self.administrative_plugin_list = administrative_plugin_list
     end
-    print(configuration.connected_message)
+    io.stderr:write(configuration.connected_message)
     local info_message = '\tUsername: @' .. self.info.username .. '\n\tName: ' .. self.info.name .. '\n\tID: ' .. self.info.id
-    print('\n' .. info_message .. '\n')
+    io.stderr:write('\n' .. info_message .. '\n')
     if redis:get('mattata:version') ~= configuration.version then
         local success = dofile('migrate.lua')
-        print(success)
+        io.stderr:write(success)
     end
     self.version = configuration.version
     -- Make necessary database changes if the version has changed.
@@ -257,7 +257,7 @@ function mattata:run(_, token)
             self.replies = {}
         end
     end
-    print(self.info.first_name .. ' is shutting down...')
+    io.stderr:write(self.info.first_name .. ' is shutting down...')
 end
 
 function mattata:on_message(message)
@@ -1399,7 +1399,7 @@ function mattata:process_message(message)
 end
 
 function mattata.process_nicknames(message)
-    local nickname = redis:hget('user:' .. message.from.id .. ':info', 'nickname')
+    local nickname = message.from and redis:hget('user:' .. message.from.id .. ':info', 'nickname')
     if nickname then
         message.from.original_name = message.from.name
         message.from.has_nickname = true
