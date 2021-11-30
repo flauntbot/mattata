@@ -54,7 +54,6 @@ function time:on_message(message, configuration, language)
         address = location.address
     end
     local f = assert(io.popen(string.format('TZ=%s date', jdat.results[1].annotations.timezone.name), 'r'))
-    print(string.format('TZ=%s date', jdat.results[1].annotations.timezone.name))
     local current = assert(f:read('*a'))
     f:close()
     current = current:gsub('^(%w+ %w+ %d*) (%d*:%d*:%d*) (%d+)$', '%2</b> on <b>%1 %3') -- We want the time first!
