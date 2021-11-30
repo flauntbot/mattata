@@ -19,6 +19,8 @@ end
 function time:on_message(message, configuration, language)
     local input = mattata.input(message.text:lower())
     local location = false
+    local timezone
+    local address
     if message.reply and not input then -- If it's used in reply to someone, we want their time instead.
         message.from = message.reply.from
     end
@@ -33,38 +35,31 @@ function time:on_message(message, configuration, language)
         location = setloc.get_loc(message.from.id)
         if location then
             location = json.decode(location)
+            input = location.address
         end
     end
-    if not location then
-        local jstr, res = https.request('https://api.opencagedata.com/geocode/v1/json?key=' .. configuration.keys.location .. '&pretty=0&q=' .. url.escape(input))
-        if res ~= 200 then
-            return mattata.send_reply(message, language.errors.connection)
-        end
-        local jdat = json.decode(jstr)
-        if jdat.total_results == 0 then
-            return mattata.send_reply(message, language.errors.results)
-        end
-        location = {
-            ['latitude'] = jdat.results[1].geometry.lat,
-            ['longitude'] = jdat.results[1].geometry.lng,
-            ['address'] = jdat.results[1].formatted
-        }
-    end
-    local formatted_location = string.format('%s,%s', location.latitude, location.longitude)
-    local jstr, res = https.request('https://maps.googleapis.com/maps/api/timezone/json?location=' .. formatted_location .. '&timestamp=' .. os.time() .. '&key=' .. configuration.keys.maps)
+
+    local jstr, res = https.request('https://api.opencagedata.com/geocode/v1/json?key=' .. configuration.keys.location .. '&pretty=0&q=' .. url.escape(input))
     if res ~= 200 then
         return mattata.send_reply(message, language.errors.connection)
     end
     local jdat = json.decode(jstr)
-    if jdat.errorMessage then
-        local output = string.format('Error `%s: %s`', jdat.status, jdat.errorMessage)
-        return mattata.send_message(message, output, true)
+    if jdat.total_results == 0 then
+        return mattata.send_reply(message, language.errors.results)
     end
-    local offset = os.time() + tonumber(jdat.rawOffset) + tonumber(jdat.dstOffset)
-    local current = os.date('%c', offset)
+    timezone = jdat.results[1].annotations.timezone.offset_string
+    if not location then
+        address = jdat.results[1].formatted
+    else
+        address = location.address
+    end
+    local f = assert(io.popen(string.format('TZ=%s date', jdat.results[1].annotations.timezone.name), 'r'))
+    print(string.format('TZ=%s date', jdat.results[1].annotations.timezone.name))
+    local current = assert(f:read('*a'))
+    f:close()
     current = current:gsub('^(%w+ %w+ %d*) (%d*:%d*:%d*) (%d+)$', '%2</b> on <b>%1 %3') -- We want the time first!
     local output = 'It is currently <b>%s</b> <code>[%s]</code> in %s.'
-    output = string.format(output, current, jdat.timeZoneName, location.address)
+    output = string.format(output, current, timezone, address)
     return mattata.send_reply(message, output, 'html')
 end
 
