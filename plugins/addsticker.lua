@@ -1,132 +1,126 @@
 --[[
-    Copyright 2020 Matthew Hesketh <matthew@matthewhesketh.com>
+    Copyright 2020 Matthew Hesketh <matthew@matthewhesketh.com>, 2021 Chris
     This code is licensed under the MIT. See LICENSE for details.
 ]]
 
+-- animated stickers have to go in special animated sticker packs.
+-- we still add them to the pack, using external command to thumbnail at 80%
+
 local addsticker = {}
 local mattata = require('mattata')
-local http = require('socket.http')
-local ltn12 = require('ltn12')
-local mime = require('mime')
 local json = require('dkjson')
 local redis = require('libs.redis')
 local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function addsticker:init()
     addsticker.commands = mattata.commands(self.info.username):command('addsticker'):command('getsticker').table
-    addsticker.help = '/addsticker [pack name] - Converts the replied-to photo into a sticker and adds it to your pack. Specify a name for the pack via command input on first use, this cannot be changed after, until you\'ve hit 120 stickers and it makes a new set, or you\'ve deleted your pack in @stickers. Use /getsticker to get the uncompressed file to send to @stickers.'
+    addsticker.help = '/addsticker [pack name] - Converts the replied-to photo into a sticker and adds it to your pack. TODO: FIX THIS TEXT WHEN I DECIDE HOW IT WORKS. Use /getsticker to get the uncompressed file to send to @stickers.'
 end
 
 function addsticker.delete_file(file)
     os.execute('rm ' .. file)
-    os.execute('rm output.png')
+    os.execute('rm -f output.png')
     return true
 end
 
+function addsticker.new_pack(message, set_id, title, file, character) -- amount
+    -- name logic needs to be injected in here so i can increment the pack number
+    set_id = set_id + 1
+    local name = addsticker.generate_name(message.from.id, set_id)
+    local success, res = mattata.create_new_sticker_set(message.from.id, name, title, file, character)
+    if not success and res.description == "Bad Request: sticker set name is already occupied" then
+        -- need to increment pack number here
+        redis:hset('user:' .. message.from.id .. ':info', 'sticker_packs', set_id)
+        return addsticker.add_to_pack(message, set_id, title, file, character)
+    end
+    -- update pack count in database before handing back
+    if success then
+        redis:hset('user:' .. message.from.id .. ':info', 'sticker_packs', set_id)
+        mattata.send_reply(message, 'I\'ve created you a pack called _' .. mattata.escape_markdown(title) .. '_ and added that sticker to [your new pack](https://t.me/addstickers/' .. name .. ')!', true, true)
+    end
+    return success, res, name, set_id -- pack name? what info we need to put a sticker in?
+end
+
+function addsticker.add_to_pack(message, set_id, title, file, character)
+    local name = addsticker.generate_name(message.from.id, set_id)
+    local success, res
+    success, res = mattata.add_sticker_to_set(message.from.id, name, file, character)
+    if not success and res.description == "Bad Request: STICKERSET_INVALID" then
+        local exists = mattata.get_sticker_set(name)
+        if exists then
+            set_id = set_id + 1
+        end
+        return addsticker.new_pack(message, set_id, title, file, character)
+    end
+    if success then
+        mattata.send_reply(message, 'I\'ve added that to [your pack](https://t.me/addstickers/' .. name .. ')!', true, true)
+    end
+    return success, res, name, set_id
+end
+
+function addsticker.generate_name(who, which)
+    return string.format('U%s_%s_by_%s', who, which, mattata.info.username:lower())
+end
+
 function addsticker:on_message(message, configuration, language)
-    local is_sticker, is_text
+    local is_sticker, is_text, is_animated
     local input = mattata.input(message.text)
     if not message.reply then
         return mattata.send_reply(message, 'You must use this command in reply to a photo!')
     elseif not message.reply.is_media and message.reply.text then
-        local sizes
-        local reply = {}
-        local success = mattata.get_user_profile_photos(message.reply.from.id)
+        -- original user data is hidden in database; mattata messes it up with nicknames
+        -- print(json.encode(mattata.get_chat(sender.id))) -- might be better?
+        local sender = redis:hgetall('user:' .. message.reply.from.id .. ':info')
+        if not message.reply.from.has_nickname then
+            sender = message.reply.from
+        end
+        if message.reply.media_type == "forwarded" then
+            if message.reply.forward_from_chat then
+                sender = {
+                    ['id'] = message.reply.forward_from_chat.id,
+                    ['name'] = message.reply.forward_from_chat.title
+                }
+            else
+                sender = message.reply.forward_from
+            end
+        else if message.reply.forward_sender_name then
+            sender = {
+                ['id'] = message.reply.forward_sender_name.length,
+                ['name'] = message.reply.forward_sender_name
+            }
+        end
+        end
+        local success = mattata.get_user_profile_photos(sender.id)
+
         if success and success.result.total_count > 0 then
-            sizes = {
-                ['small_file_id'] = success.result.photos[1][1].file_id,
-                ['small_file_unique_id'] = success.result.photos[1][1].file_unique_id,
-                ['big_file_id'] = success.result.photos[1][#success.result.photos[1]].file_id,
-                ['big_file_unique_id'] = success.result.photos[1][#success.result.photos[1]].file_unique_id
-            }
+            sender.avatar = mattata.get_file(success.result.photos[1][1].file_id).result.file_path
         end
-        if message.reply.reply then -- Check the context object for a reply to a reply.
-            local reply_original_name = message.reply.reply.from.has_nickname and message.reply.reply.from.original_name or message.reply.reply.from.name
-            reply =  {
-                ['chatId'] = message.chat.id,
-                ['from'] = {
-                    ['id'] = message.reply.reply.from.id,
-                    ['name'] = reply_original_name
-                },
-                ['text'] = message.reply.reply.text
-            }
-        end
-        local original_name = message.reply.from.has_nickname and message.reply.from.original_name or message.reply.from.name
-        if (message.reply.text:match('^[\216-\219][\128-\191]') or message.reply.text:match('^' .. utf8.char(0x202e)) or message.reply.text:match('^' .. utf8.char(0x200f))) then
-            message.reply.text = mattata.split_string(message.reply.text, true)
-            message.reply.text = table.concat(message.reply.text, ' ')
-        end
+
         local payload = {
-            ['type'] = 'quote',
             ['backgroundColor'] = '#243447',
             ['width'] = 512,
-            ['height'] = 512,
             ['scale'] = 2,
-            ['messages'] = {
-                {
-                    ['message'] = {
-                        ['chatId'] = message.chat.id,
-                        ['avatar'] = true,
-                        ['from'] = {
-                            ['id'] = message.reply.from.id,
-                            ['name'] = original_name
-                        },
-                        ['text'] = message.reply.text
-                    },
-                    ['replyMessage'] = reply,
-                    ['entities'] = {}
-                }
+            ['message'] = {
+                ['chatId'] = sender.id,
+                ['from'] = sender,
+                ['text'] = message.reply.text,
+                --['replyMessage'] = reply,
+                ['entities'] = message.reply.entities
             }
         }
-        if type(sizes) == 'table' then
-            payload.messages[1].message.from.photo = sizes
-        end
-        if message.reply.from.username then
-            payload.messages[1].message.from.username = message.reply.from.username
-        end
-        if message.reply.entities then
-            payload.messages[1].entities = message.reply.entities
-        end
         payload = json.encode(payload) -- Serialise the payload.
-        local response = {}
-        local old_timeout = http.TIMEOUT
-        http.TIMEOUT = 3
-        local _, res = http.request({
-            ['url'] = 'http://localhost:3000/generate',
-            ['method'] = 'POST',
-            ['headers'] = {
-                ['Content-Type'] = 'application/json',
-                ['Content-Length'] = payload:len()
-            },
-            ['source'] = ltn12.source.string(payload),
-            ['sink'] = ltn12.sink.table(response)
-        })
-        http.TIMEOUT = old_timeout
-        if res ~= 200 then
-            return false
-        end
-        response = table.concat(response)
-        local jdat = json.decode(response)
-        local output = configuration.bot_directory .. '/output.webp'
-        ltn12.pump.all(
-            ltn12.source.string(jdat.result.image),
-            ltn12.sink.chain(
-                mime.decode('base64'),
-                ltn12.sink.file(io.open(output, 'w'))
-            )
-        )
+        local rr = io.popen("mtsticker ".. configuration.bot_directory .. '/output.webp', "w")
+        rr:write(payload)
+        rr:flush()
+        rr:close()
         is_text = true
     elseif message.reply.sticker then
         if message.reply.sticker.is_animated then
-            return mattata.send_reply(message, 'I\'m afraid animated stickers aren\'t supported at the moment.')
+            is_animated = true
         end
         is_sticker = true
     elseif not message.reply.photo and not message.reply.document then
-        local success = mattata.get_user_profile_photos(message.reply.from.id)
-        if not success or success.result.total_count == 0 then
-            return mattata.send_reply(message, 'This user doesn\'t allow me to see their profile picture. You must use this command in reply to a photo!')
-        end
-        message.reply.file_id = success.result.photos[1][#success.result.photos[1]].file_id
+        return mattata.send_reply(message, 'You must use this command in reply to a photo!')
     elseif message.reply.document then
         if (message.reply.document.mime_type ~= 'image/jpeg' and message.reply.document.mime_type ~= 'image/png') or not message.reply.document.file_name:match('%.[JjPp][PpNn][Ee]?[Gg]$') then
             return mattata.send_reply(message, 'The file must be JPEG or a PNG image.')
@@ -154,7 +148,15 @@ function addsticker:on_message(message, configuration, language)
         file_name = 'output.webp'
         file = configuration.bot_directory .. '/output.webp'
     end
-    local command = is_sticker and string.format('dwebp %s -o output.png', file_name) or string.format('convert ' .. file_name .. ' -resize 512x512 output.png', file)
+    local command
+    if is_sticker or (not is_text and message.reply.is_media) then
+        if is_animated then
+            command = string.format('lottiethumb %s output.png', file_name)
+        else
+            -- string.format('dwebp %s -resize 512 512 -o output.png', file_name) or
+            command = string.format('convert %s -resize 512x512 output.png', file_name)
+        end
+    end
     os.execute(command)
     local output_file = configuration.bot_directory .. '/output.png'
     if message.text:match('^[/!#]getsticker') then
@@ -164,45 +166,48 @@ function addsticker:on_message(message, configuration, language)
         end
         return true
     end
-    local set_name = string.format('U%s_by_%s', message.from.id, self.info.username:lower())
+
+    -- start sticker uploading bit
+
+    local amount = redis:hget('user:' .. message.from.id .. ':info', 'sticker_packs') or 0
+
+    local emojis = input or  utf8.char(128045)
+
+    local set_name
     local set_title = message.from.original_name or message.from.first_name
-    local exists = mattata.get_sticker_set(set_name)
-    if exists then
-        if #exists.result.stickers == 120 then -- Maximum amount of stickers allowed per-pack.
-            local amount = exists.result.name:match('^U%d+_(%d*)')
-            local new = (amount and tonumber(amount) or 1) + 1
-            set_name = string.format('U%s_%s_by_%s', message.from.id, new, self.info.username:lower())
-            amount = redis:hget('user:' .. message.from.id .. ':info', 'sticker_packs') or 1
-            amount = math.floor(tonumber(amount)) + 1
-            redis:hset('user:' .. message.from.id .. ':info', 'sticker_packs', amount)
-        else
-            local success = mattata.add_sticker_to_set(message.from.id, set_name, output_file, utf8.char(128045))
-            if type(file) == 'string' then
-                addsticker.delete_file(file)
-            end
-            if not success then
-                return mattata.send_reply(message, language.errors.generic)
-            end
-            return mattata.send_reply(message, 'I\'ve added that to [your pack](https://t.me/addstickers/' .. set_name .. ')!', true, true)
+    local success, res
+    local fn
+    fn = output_file
+    if is_text then
+        fn = file_name
+    end
+
+
+    if amount == 0 or amount == '0' then
+        success, res, set_name = addsticker.new_pack(message, amount, set_title, fn, emojis)
+        if success then
+            -- idk man, we already said what we were doing
+            return true
+        end
+    else
+        success, res, set_name = addsticker.add_to_pack(message, amount, set_title, fn, emojis)
+        if success then
+            -- we already said what we were doing
+            return true
         end
     end
-    if input then
-        if input:len() > 64 then
-            if type(file) == 'string' then
-                addsticker.delete_file(file)
-            end
-            return mattata.send_reply(message, 'The sticker pack title cannot be longer than 64 characters in length!')
-        end
-        set_title = input
+
+    if res.description == "Bad Request: invalid sticker emojis" then
+        return mattata.send_reply(message, "Sticker emoji given as argument didn't work!", true, true)
+    elseif res.description == "Bad Request: user not found" or res.description == "Bad Request: PEER_ID_INVALID" then
+        return mattata.send_reply(message, 'I can\'t create your sticker pack until you\'ve [started a private chat](https://t.me/' .. self.info.username .. ') with me!', true, true)
     end
-    local success = mattata.create_new_sticker_set(message.from.id, set_name, set_title, output_file, utf8.char(128045))
-    if type(file) == 'string' then
-        addsticker.delete_file(file)
-    end
-    if not success then
-        return mattata.send_reply(message, language.errors.generic)
-    end
-    return mattata.send_reply(message, 'I\'ve created you a pack called _' .. mattata.escape_markdown(set_title) .. '_ and added that sticker to [your new pack](https://t.me/addstickers/' .. set_name .. ')!', true, true)
+
+    -- do something with res
+    mattata.send_message(mattata.get_log_chat(0), json.encode(success) .. json.encode(res) .. set_name, 'html')
+    if type(file) == 'string' and success then addsticker.delete_file(file) end
+    return mattata.send_reply(message, language.errors.generic)
+
 end
 
 return addsticker
