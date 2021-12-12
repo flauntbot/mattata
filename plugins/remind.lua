@@ -135,7 +135,7 @@ function remind.on_message(_, message)
     if count >= 4 then
         return mattata.send_reply(
             message,
-            'You already have 4 reminders set up in this chat. Please wait for one to expire before you add any more!'
+            'This chat already has 4 reminders set. Please wait for one to expire before you add any more!'
         )
     end
     table.insert(
