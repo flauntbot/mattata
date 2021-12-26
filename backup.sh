@@ -7,11 +7,10 @@ if [ ! -d "backups/" ]; then
     mkdir backups
 fi
 
-if [ ! $redispassword == "nil" ]; then
-    redis-dump -u ":$redispassword@$redishost:$redisport" -d "$redisdb" > "backups/$(date).json"
+if [ ! "${redispassword}" = "nil" ]; then
+    redis-dump -u ":${redispassword}@${redishost}:${redisport}" -d "${redisdb}" > "backups/$(date).json"
 else
     redis-dump > "backups/$(date).json"
 fi
-printf "bot's database has been saved!"
-
+echo "bot's database has been saved!"
 
