@@ -14,7 +14,7 @@ local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function addsticker:init()
     addsticker.commands = mattata.commands(self.info.username):command('addsticker'):command('getsticker').table
-    addsticker.help = '/addsticker [pack name] - Converts the replied-to photo into a sticker and adds it to your pack. TODO: FIX THIS TEXT WHEN I DECIDE HOW IT WORKS. Use /getsticker to get the uncompressed file to send to @stickers.'
+    addsticker.help = '/addsticker [pack name] - Converts the replied-to photo into a sticker and adds it to your pack. Use /getsticker to get the uncompressed file to send to @stickers.'
 end
 
 function addsticker.delete_file(file)
@@ -123,11 +123,14 @@ function addsticker:on_message(message, configuration, language)
         return mattata.send_reply(message, 'You must use this command in reply to a photo!')
     elseif message.reply.document then
         if (message.reply.document.mime_type ~= 'image/jpeg' and message.reply.document.mime_type ~= 'image/png') or not message.reply.document.file_name:match('%.[JjPp][PpNn][Ee]?[Gg]$') then
-            return mattata.send_reply(message, 'The file must be JPEG or a PNG image.')
+            if not message.reply.animation then
+                return mattata.send_reply(message, 'The file must be JPEG or a PNG image.')
+            end
         elseif message.reply.document.file_size > 1048576 then
             return mattata.send_reply(message, 'Please send a photo that is 1MB or smaller in file size!')
         end
     end
+
     local file, file_name
     if not is_text and message.reply.is_media then
         file = mattata.get_file(message.reply.file_id)
@@ -154,7 +157,7 @@ function addsticker:on_message(message, configuration, language)
             command = string.format('lottiethumb %s output.png', file_name)
         else
             -- string.format('dwebp %s -resize 512 512 -o output.png', file_name) or
-            command = string.format('convert %s -resize 512x512 output.png', file_name)
+            command = string.format('convert %s[0] -resize 512x512 output.png', file_name)
         end
     end
     os.execute(command)
