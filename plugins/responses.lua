@@ -44,11 +44,11 @@ function responses:on_new_message(message)
                 local yesno = {
                     'Yes',
                     'No',
-                    'Maybe',
-                    'Ask again later',
+                    --'Maybe',
+                    --'Ask again later',
                     'Definitely',
                     'Definitely not',
-                    'I don\'t know'
+                    --'I don\'t know'
                 }
                 local output = yesno[math.random(#yesno)]
                 if category == 'night' then
