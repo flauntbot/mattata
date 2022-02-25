@@ -245,25 +245,26 @@ function help:on_callback_query(callback_query, message, _, language)
             true,
             mattata.inline_keyboard():row(
                 mattata.row():url_button(
-                    language['help']['13'],
+                    language['help']['13'] .. " and " .. language['help']['15'],
                     'https://t.me/flaunt_and_dither'
-                ):url_button(
-                    language['help']['14'],
-                    'https://t.me/mafflebot'
-                ):url_button(
-                    language['help']['15'],
-                    'https://t.me/flaunt_and_dither'
+                --):url_button(
+                --    language['help']['14'],
+                --    'https://t.me/mafflebot'
+                --):url_button(
+                --    language['help']['15'],
+                --    'https://t.me/flaunt_and_dither'
                 )
             ):row(
                 mattata.row():url_button(
-                    language['help']['16'],
-                    'https://t.me/mattataFAQ'
-                ):url_button(
+                --    language['help']['16'],
+                --    'https://t.me/mattataFAQ'
+                --):url_button(
                     language['help']['17'],
-                    'https://github.com/wrxck/mattata'
+                    'https://github.com/flauntbot/mattata'
                 ):url_button(
                     language['help']['18'],
-                    'https://buy.stripe.com/cN29COdJW1wU2t27su'
+                    --'https://buy.stripe.com/cN29COdJW1wU2t27su'
+                    'http://t.me/mtfutilsbot?start=donate'
                 )
             ):row(
                 mattata.row():url_button(

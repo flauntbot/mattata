@@ -642,7 +642,7 @@ Redis:
         ['4'] = 'لا يمكنني إلغاء الثقة بهذا الشخص لأنه مطرود من المجموعة.',
     },
     ['version'] = {
-        ['1'] = '@%s AKA %s `[%s]` is running mafflebot %s, created by Chris. The source code is available on [GitHub](https://github.com/wrxck/mattata).'
+        ['1'] = '%s AKA @%s is running `mafflebot (mattata) v%s`. The source code is available on [GitHub](https://github.com/flauntbot/mattata).'
     },
     ['weather'] = {
         ['1'] = 'لا موقع لديك. استخدم /setloc <الموقع> لضبط واحدة.',

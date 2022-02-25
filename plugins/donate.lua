@@ -12,7 +12,8 @@ function donate:init()
 end
 
 function donate.on_message(_, message, _, language)
-    local output = string.format(language['donate']['1'], mattata.escape_html(message.from.first_name), 'https://buy.stripe.com/cN29COdJW1wU2t27su')
+    --local output = string.format(language['donate']['1'], mattata.escape_html(message.from.first_name), 'https://buy.stripe.com/cN29COdJW1wU2t27su')
+    local output = string.format(language['donate']['1'], mattata.escape_html(message.from.first_name), 'http://t.me/mtfutilsbot?start=donate')
     return mattata.send_message(message.chat.id, output, 'html')
 end
 

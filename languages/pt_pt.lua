@@ -245,7 +245,7 @@ return {
         ['1'] = 'Por favor, escreva o texto que deseja para Doge-ify. Cada sentença deve ser separada usando barras (/) ou novas linhas.'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on the bot\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['fact'] = {
         ['1'] = 'Gerar Outro'

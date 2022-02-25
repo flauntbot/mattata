@@ -254,7 +254,7 @@ return {
         ['1'] = 'Nie wiem co to jest!'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on the bot\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['eightball'] = {
         ['1'] = 'Tak.',
@@ -650,7 +650,7 @@ System:
         ['4'] = 'Nie mogę przestać ufać temu użytkownikowi, ponieważ został on wyrzucony z tej grupy.',
     },
     ['version'] = {
-        ['1'] = '@%s AKA %s `[%s]` działa pod kontrolą mafflebot %s, stworzona przez Chris. Kod źródłowy jest dostępny na [GitHubie](https://github.com/wrxck/mattata).'
+        ['1'] = '%s AKA @%s działa pod kontrolą `mafflebot (mattata) v%s`. Kod źródłowy jest dostępny na [GitHubie](https://github.com/flauntbot/mattata).'
     },
     ['weather'] = {
         ['1'] = 'Nie masz ustawionej lokalizacji. Użyj /setloc <lokalizacja> aby ustawić.',

@@ -5,17 +5,14 @@
 
 local about = {}
 local mattata = require('mattata')
-local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function about:init()
-    about.commands = mattata.commands(self.info.username):command('about').table
+    about.commands = mattata.commands(self.info.username):command('about'):command('source').table
     about.help = '/about - View information about the bot.'
 end
 
-function about:on_message(message)
-    local developer = mattata.get_formatted_user(221714512, 'Matt', 'html')
-    local output = 'Created by %s. Powered by <code>mattata v%s</code> and %s. Latest stable source code available <a href="https://github.com/wrxck/mattata">on GitHub</a>.'
-    return mattata.send_message(message.chat.id, string.format(output, developer, self.version, utf8.char(10084)), 'html')
+function about:on_message(message, _, language)
+    return mattata.send_message(message.chat.id, string.format(language['version']['1'], self.info.name, self.info.username, self.version), 'markdown')
 end
 
 return about

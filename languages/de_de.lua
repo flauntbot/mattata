@@ -251,7 +251,7 @@ return {
         ['1'] = 'Bitte gebe den text ein welchen du in Doge-ify sehen willst. Jeder Satz sollte getrennt sein mit Schrägstrich oder neue Zeile..'
     },
     ['donate'] = {
-        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on mattata\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
+        ['1'] = '<b>Hello, %s!</b>\n\nIf you\'re feeling generous, you can contribute to the mafflebot project by making a monetary donation of any amount. This will go towards server costs and any time and resources used to develop mafflebot. This is an optional act, however it is greatly appreciated and your name will also be listed publically on the bot\'s GitHub page.\n\nIf you\'re still interested, you can donate <a href="%s">here</a>. Thank you for your continued support!'
     },
     ['duckduckgo'] = {
         ['1'] = 'Ich bin nicht sicher was das ist!'
@@ -641,7 +641,7 @@ System:
         ['4'] = 'Ich kann den Benutzer nicht zu untrust(nicht vertrauen) einstellen, weil er von dieser Gruppe entfernt wurde.'
     },
     ['version'] = {
-        ['1'] = '@%s alias %s `[%s]` läuft mit mafflebot %s, kreiert von Chris. Der Quellcode ist auf [GitHub](https://github.com/wrxck/mattata) zu bekommen.'
+        ['1'] = '%s alias @%s läuft mit `mafflebot (mattata) v%s`. Der Quellcode ist auf [GitHub](https://github.com/flauntbot/mattata) zu bekommen.'
     },
     ['weather'] = {
         ['1'] = 'Du hast keinen Standort ausgewählt. Zum auswählen benutze /setloc <Standort>.',
