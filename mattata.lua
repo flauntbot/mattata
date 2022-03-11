@@ -1407,7 +1407,9 @@ function mattata.process_nicknames(message)
         message.from.first_name = nickname
         message.from.last_name = nil
     else
-        message.from.has_nickname = false
+        if message.from then
+            message.from.has_nickname = false
+        end
     end
     if message.reply then
         nickname = redis:hget('user:' .. message.reply.from.id .. ':info', 'nickname')
