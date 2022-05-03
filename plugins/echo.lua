@@ -19,6 +19,9 @@ function echo.on_message(_, message)
         input = input:match('^(.-) %-d$')
         mattata.delete_message(message.chat.id, message.message_id)
     end
+    if message.reply then
+        return mattata.send_reply(message.reply, input)
+    end
     return mattata.send_message(message.chat.id, input)
 end
 
