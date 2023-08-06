@@ -71,18 +71,18 @@ function lastfm:on_message(message, configuration, language)
         return mattata.send_reply(message.chat.id, language['lastfm']['5'])
     end
     jdat = jdat.recenttracks.track[1] or jdat.recenttracks.track
-    output = input and mattata.escape_html(input) or string.format('<a href="%s">%s</a>', 'https://last.fm/user/' .. url.escape(username), mattata.escape_html(message.from.first_name))
+    output = input and string.format('<a href="%s">%s</a>', mattata.escape_html('https://last.fm/user/' .. url.escape(input)), mattata.escape_html(input)) or string.format('<a href="%s">%s</a>', mattata.escape_html('https://last.fm/user/' .. url.escape(username)), mattata.escape_html(message.from.first_name))
     output = (jdat['@attr'] and jdat['@attr'].nowplaying) and string.format(language['lastfm']['6'], output) or string.format(language['lastfm']['7'], output)
-    local title = jdat.name or language['lastfm']['8']
-    local artist = jdat.artist and jdat.artist['#text'] or language['lastfm']['8']
-    if artist and title ~= jdat.name then
+    local title = mattata.escape_html(jdat.name or language['lastfm']['8'])
+    local artist = mattata.escape_html(jdat.artist and jdat.artist['#text'] or language['lastfm']['8'])
+    output = output .. string.format('<a href="%s">%s</a>', mattata.escape_html(jdat.url or jdat.album.url or 'https://www.lastfm.com/music/' .. url.escape(artist)), artist .. ' - ' .. title)
+    if artist and title ~= mattata.escape_html(jdat.name) then
         mattata.send_chat_action(message.chat.id)
-        return mattata.send_message(message.chat.id, output .. artist .. ' - ' .. title)
+        return mattata.send_message(message.chat.id, output, 'html')
     elseif jdat.image and jdat.image[1]['#text'] == '' then
-        return mattata.send_message(message.chat.id, output .. artist .. ' - ' .. title)
+        return mattata.send_message(message.chat.id, output, 'html')
     end
     mattata.send_chat_action(message.chat.id, 'upload_photo')
-    output = output .. string.format('<a href="%s">%s</a>', jdat.url, artist .. ' - ' .. title)
     return mattata.send_photo(message.chat.id, jdat.image[4]['#text'], output, 'html')
 end
 
