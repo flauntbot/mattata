@@ -13,13 +13,14 @@ local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function sed:init()
     sed.commands = { '^[sS]/.-/.-/?.?$' }
-    sed.help = 's/pattern/substitution - Replaces all occurences, of text matching a given PCRE pattern, with the given substitution.'
+    sed.help = 's/pattern/substitution - Replaces all occurences, of text matching a given PCRE pattern, with the given substitution. \
+    \nAlso supports chaining multiple substitutions in one line, separated by semicolons (e.g. s/a/b/ ; s/c/d/).'
 end
 
-local compiled = re.compile[[
+local compiled = re.compile [[
 invocation <- 's/' {~ pcre ~} '/' {~ replace ~} ('/' modifiers)? !.
 pcre <- ( [^\/] / slash / '\' )*
-replace <- ( [^\/%$] / percent / slash / capture / '\' / '$' )*
+replace <- ( [^\/%$\\] / percent / slash / capture / '\' / '$' )*
 
 modifiers <- { flags? } {~ matches? ~} {~ probability? ~}
 
@@ -29,13 +30,14 @@ probability <- ('%' {[0-9]+}) -> '%1'
 
 slash <- ('\' '/') -> '/'
 percent <- '%' -> '%%%%'
-capture <- ('$' {[0-9]+}) -> '%%%1'
+capture <- (('$' {[0-9]+}) / ('\\' {[0-9]+})) -> '%%%1'
 ]]
 
 function sed:on_callback_query(callback_query, message, configuration, language)
     if not message.reply then
         return mattata.delete_message(message.chat.id, message.message_id)
-    elseif mattata.is_global_admin(callback_query.from.id) then -- we'll pull a sneaky on them
+    elseif mattata.is_global_admin(callback_query.from.id) then
+        -- we'll pull a sneaky on them
         callback_query.from = message.reply.from
     elseif message.reply.from.id ~= callback_query.from.id then
         return mattata.answer_callback_query(callback_query.id, 'That\'s not your place to say!')
@@ -80,53 +82,92 @@ function sed:on_message(message, _, language)
     --elseif message.reply.from.id == message.from.id then
     --    return mattata.send_reply(message, language['sed']['10'])
     end
-    local input = message.reply.text
-    local text = message.text:match('^[sS]/(.*)$')
-    if not text then
+
+    -- The text to perform substitutions on:
+    local original_text = message.reply.text
+    if not original_text or original_text == '' then
         return false
     end
-    text = 's/' .. text
-    local pattern, replace, flags, matches, probability = compiled:match(text)
-    if not pattern then
-        return false
+    -- We'll look for ALL valid s/.../.../ patterns in the incoming message,
+    -- separated by semicolons or just whitespace. This pattern is flexible,
+    -- and we feed each one to our "compiled" grammar above.
+    local all_cmds = {}
+    for cmd in message.text:gmatch('[sS]/[^/]+/[^/]+/[^%s;]*') do
+        table.insert(all_cmds, cmd)
     end
-    if matches then matches = tonumber(matches) end
-    if probability then probability = tonumber(probability) end
-    if probability then
-        if not matches then
-            matches = function()
-                return math.random() * 100 < probability
-            end
-        else
-            local remaining = matches
-            matches = function()
-                local temp
-                if remaining > 0 then
-                    temp = nil
-                else
-                    temp = 0
-                end
-                remaining = remaining - 1
-                return math.random() * 100 < probability, temp
-            end
+    -- If none matched with that more specific pattern, try a simpler one:
+    if #all_cmds == 0 then
+        -- This pattern looks for s/whatever/whatever[/optional_modifiers]
+        -- and is a bit more inclusive. You could unify these into one, but
+        -- sometimes it's easier just to do multiple attempts.
+        for cmd in message.text:gmatch('[sS]/.-/.-/?.?') do
+            table.insert(all_cmds, cmd)
         end
     end
-    local success, result, matched = pcall(function ()
-        return regex.gsub(input, pattern, replace, matches, flags)
-    end)
-    if success == false then
-        return mattata.send_reply(
-            message,
-            string.format(
-                '%s is invalid PCRE regex syntax!',
-                mattata.escape_html(text)
-            ),
-            'html'
-        )
-    elseif matched == 0 then
-        return
+
+    if #all_cmds == 0 then
+        return false
     end
-    result = mattata.trim(result)
+    local result = original_text
+    local any_matches = 0
+
+    for _, substitution_cmd in ipairs(all_cmds) do
+        -- Make sure the command actually fits 's/' prefix
+        if not substitution_cmd:match('^[sS]/') then
+            goto continue
+        end
+
+        -- Try to parse the command
+        local pattern, replace, flags, matches, probability = compiled:match(substitution_cmd)
+        if not pattern then
+            -- If the user typed invalid syntax, skip it
+            goto continue
+        end
+
+        if matches then
+            matches = tonumber(matches)
+        end
+        if probability then
+            probability = tonumber(probability)
+        end
+
+        -- Probability-based or "N matches" logic
+        if probability then
+            if not matches then
+                matches = function()
+                    return math.random() * 100 < probability
+                end
+            else
+                local remaining = matches
+                matches = function()
+                    local temp
+                    if remaining > 0 then
+                        temp = nil
+                    else
+                        temp = 0
+                    end
+                    remaining = remaining - 1
+                    return math.random() * 100 < probability, temp
+                end
+            end
+        end
+        local success, new_text, matched = pcall(function()
+            -- Apply the substitution to our running "result"
+            return regex.gsub(result, pattern, replace, matches, flags)
+        end)
+        if success and matched and matched > 0 then
+            result = mattata.trim(new_text)
+            any_matches = any_matches + matched
+        end
+        ::continue::
+    end
+
+    if any_matches == 0 then
+        -- No successful substitutions happened
+        return false
+    end
+
+    -- Build the final message that will be sent
     if not result or result == '' then
         return false
     end
