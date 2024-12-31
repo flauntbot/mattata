@@ -12,13 +12,13 @@ local regex = require('rex_pcre')
 local utf8 = utf8 or require('lua-utf8') -- Lua 5.2 compatibility.
 
 function sed:init()
-    sed.commands = { '^[sS]/.-/.-/?.?$' }
-    sed.help = 's/pattern/substitution - Replaces all occurences, of text matching a given PCRE pattern, with the given substitution. \
+    sed.commands = { '^[sS]/.+/.*/?.*$' }
+    sed.help = 's/pattern/substitution/ - Replaces all occurrences, of text matching a given PCRE pattern, with the given substitution. \
     \nAlso supports chaining multiple substitutions in one line, separated by semicolons (e.g. s/a/b/ ; s/c/d/).'
 end
 
 local compiled = re.compile [[
-invocation <- 's/' {~ pcre ~} '/' {~ replace ~} ('/' modifiers)? !.
+invocation <- ('s'/'S')'/' {~ pcre ~} '/' {~ replace ~} ('/' modifiers)? !.
 pcre <- ( [^\/] / slash / '\' )*
 replace <- ( [^\/%$\\] / percent / slash / capture / '\' / '$' )*
 
@@ -33,7 +33,7 @@ percent <- '%' -> '%%%%'
 capture <- (('$' {[0-9]+}) / ('\\' {[0-9]+})) -> '%%%1'
 ]]
 
-function sed:on_callback_query(callback_query, message, configuration, language)
+function sed:on_callback_query(callback_query, message, _, language)
     if not message.reply then
         return mattata.delete_message(message.chat.id, message.message_id)
     elseif mattata.is_global_admin(callback_query.from.id) then
@@ -92,7 +92,16 @@ function sed:on_message(message, _, language)
     -- separated by semicolons or just whitespace. This pattern is flexible,
     -- and we feed each one to our "compiled" grammar above.
     local all_cmds = {}
-    for cmd in message.text:gmatch('[sS]/[^/]+/[^/]+/[^%s;]*') do
+    local warnings = {}
+    for cmd in message.text:gmatch('[sS]/[^/]+/[^/]*/?[^%s;]*') do
+        if cmd:match('^S/') then
+            table.insert(warnings,
+                    'Warning: the substitution command is "s". In future your "S" may be silently ignored.')
+        end
+        if not cmd:match('[sS]/[^/]+/[^/]*/[^%s;]*') then
+            table.insert(warnings,
+                    'Warning: no terminating slash. In future, this request may be silently ignored.')
+        end
         table.insert(all_cmds, cmd)
     end
     -- If none matched with that more specific pattern, try a simpler one:
@@ -100,7 +109,15 @@ function sed:on_message(message, _, language)
         -- This pattern looks for s/whatever/whatever[/optional_modifiers]
         -- and is a bit more inclusive. You could unify these into one, but
         -- sometimes it's easier just to do multiple attempts.
-        for cmd in message.text:gmatch('[sS]/.-/.-/?.?') do
+        for cmd in message.text:gmatch('[sS]/.-/.*/?.?') do
+            if cmd:match('^S/') then
+                table.insert(warnings,
+                        'Warning: the substitution command is "s". In future your "S" may be silently ignored.')
+            end
+            if not cmd:match('[sS]/[^/]+/[^/]*/[^%s;]*') then
+                table.insert(warnings,
+                        'Warning: no terminating slash. In future, this request may be silently ignored.')
+            end
             table.insert(all_cmds, cmd)
         end
     end
@@ -165,6 +182,10 @@ function sed:on_message(message, _, language)
     if any_matches == 0 then
         -- No successful substitutions happened
         return false
+    end
+
+    if #warnings > 0 then
+        result = result .. "\n\n" .. table.concat(warnings, "\n")
     end
 
     -- Build the final message that will be sent
