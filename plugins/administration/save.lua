@@ -13,7 +13,7 @@ function save:init()
 end
 
 function save.on_message(_, message, _, language)
-    if not message.reply or (not message.reply.text and not message.reply.voice) then
+    if not message.reply or ((not message.reply.text or message.reply.text == '') and not message.reply.voice) then
         return mattata.send_reply(message, save.help)
     elseif message.reply.forward_from then
         message.reply.from = message.reply.forward_from
