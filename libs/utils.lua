@@ -323,7 +323,7 @@ function utils.is_valid(message, offset) -- Performs basic checks on the message
 -- for its purpose. If it's valid, this function will return `true` - otherwise it will return `false`.
     if not message then -- If the `message` object is nil, then we'll ignore it.
         return false, 'No `message` object exists!'
-    elseif message.date < os.time() - (offset or 10) then -- We don't want to process old messages, so anything
+    elseif not message.date or (message.date < os.time() - (offset or 10)) then -- We don't want to process old messages, so anything
     -- older than the current system time (giving it a leeway of 10 seconds, unless otherwise specified).
         return false, 'This `message` object is too old!'
     elseif not message.from then -- If the `message.from` object doesn't exist, this will likely
