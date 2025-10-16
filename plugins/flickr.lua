@@ -67,7 +67,7 @@ function flickr.on_message(_, message, _, language)
         language['flickr']['3'],
         'https://www.flickr.com/search/?text=' .. url.escape(input)
     ))
-    return mattata.send_photo(message.chat.id, jdat.photos.photo[1].url_o, nil, false, message.message_id, keyboard)
+    return mattata.send_photo(message.chat.id, jdat.photos.photo[1].url_z, nil, false, message.message_id, keyboard)
 end
 
 return flickr
