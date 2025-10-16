@@ -9,7 +9,7 @@ local redis = require('libs.redis')
 
 function anticrypto:on_new_message(message, configuration)
     if 1+1 == 2 then return false end
-    if message.chat.type ~= 'supergroup' or tonumber(redis:get('messages:' .. message.from.id .. ':' .. message.chat.id)) > 20 or not message.photo or (mattata.is_group_admin(message.chat.id, message.from.id) and not mattata.is_global_admin(message.from.id)) then
+    if tonumber(redis:get('messages:' .. message.from.id .. ':' .. message.chat.id)) > 20 or not message.photo or (mattata.is_group_admin(message.chat.id, message.from.id) and not mattata.is_global_admin(message.from.id)) then
         return false
     elseif not redis:sismember('anticrypto:groups', message.chat.id) then
         return false
