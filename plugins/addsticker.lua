@@ -139,7 +139,6 @@ function addsticker:on_message(message, configuration, language)
         end
         file_name = file.result.file_path
         if not configuration.local_mode then
-            file_name = file.result.file_path
             local file_path = string.format('%s%s/%s', configuration.endpoint, configuration.bot_token, file_name)
             file = mattata.download_file(file_path, file_name:match('/(.-)$'), configuration.bot_directory)
             if not file then
@@ -154,10 +153,10 @@ function addsticker:on_message(message, configuration, language)
     local command
     if is_sticker or (not is_text and message.reply.is_media) then
         if is_animated then
-            command = string.format('lottiethumb %s output.png', file_name)
+            command = string.format('lottiethumb "%s" output.png', file_name)
         else
             -- string.format('dwebp %s -resize 512 512 -o output.png', file_name) or
-            command = string.format('convert %s[0] -resize 512x512 output.png', file_name)
+            command = string.format('convert "path:%s[0]" -resize 512x512 output.png', file_name)
         end
     end
     os.execute(command)
