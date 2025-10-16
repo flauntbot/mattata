@@ -13,7 +13,7 @@ function banpack:init()
 end
 
 function banpack:on_new_message(message)
-    if message.chat.type ~= 'supergroup' or not message.sticker or not message.sticker.set_name then
+    if not message.sticker or not message.sticker.set_name then
         return false
     elseif redis:sismember('banned_sticker_packs:' .. message.chat.id, message.sticker.set_name) and not mattata.is_group_admin(message.chat.id, message.from.id) then
         return mattata.delete_message(message.chat.id, message.message_id)

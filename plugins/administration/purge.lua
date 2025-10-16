@@ -13,7 +13,7 @@ function purge:init()
 end
 
 function purge:on_message(message, configuration, language)
-    if message.chat.type ~= 'supergroup' and not mattata.is_group_admin(message.chat.id, message.from.id) then
+    if not mattata.is_group_admin(message.chat.id, message.from.id) then
         return mattata.send_reply(message, language['errors']['admin'])
     end
     if redis:get('purge:' .. message.chat.id) then
