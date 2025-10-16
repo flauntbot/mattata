@@ -579,7 +579,7 @@ function meme.get_memes(offset, first_line, last_line)
     local id = first
     for i = first, last
     do
-        local image = 'https://memegen.link/' .. meme.memes[i] .. '/' .. meme.escape(first_line)
+        local image = 'https://api.memegen.link/images/' .. meme.memes[i] .. '/' .. meme.escape(first_line)
         if last_line
         then
             image = image .. '/' .. meme.escape(last_line)
