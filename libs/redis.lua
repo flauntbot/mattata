@@ -51,7 +51,7 @@ local success = pcall(function()
 end)
 
 if not success then
-    io.stderr:write('An error has occured whilst connecting to redis!')
+    io.stderr:write('An error has occurred whilst connecting to redis!')
     return false
 end
 
