@@ -27,7 +27,7 @@ function addcommand.on_message(_, message, _, language)
     if description:len() > 256 then
         return mattata.send_reply(message, language['addcommand']['3'])
     end
-    commands = table.insert(commands, { ['command'] = command, ['description'] = description })
+    table.insert(commands, { ['command'] = command, ['description'] = description })
     local success = mattata.set_my_commands(commands)
     if not success then
         return mattata.send_reply(message, language['addcommand']['4'])
