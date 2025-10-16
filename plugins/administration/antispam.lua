@@ -45,7 +45,7 @@ end
 
 function antispam.on_member_join(_, message)
     for _, user in pairs(message.new_chat_members) do
-        redis:set('join_time:' .. user.id .. ':' .. message.chat.id, os.time())
+        redis:setex('join_time:' .. user.id .. ':' .. message.chat.id, 2628000, os.time())
     end
 end
 
@@ -116,6 +116,10 @@ function antispam:on_new_message(message, configuration, language)
     end
     local messages = redis:get('messages:' .. message.from.id .. ':' .. message.chat.id) or 0
     local join_time = redis:get('join_time:' .. message.from.id .. ':' .. message.chat.id)
+    -- Early prune: once a user is active beyond the on-join threshold, drop the join_time flag.
+    if join_time and tonumber(messages) and tonumber(messages) > 3 then
+        redis:del('join_time:' .. message.from.id .. ':' .. message.chat.id)
+    end
     if message.chat.type == 'supergroup' and not mattata.is_group_admin(message.chat.id, message.from.id) and messages <= 3 and join_time and mattata.get_setting(message.chat.id, 'kick urls on join') and message.entities then
         for _, entity in pairs(message.entities) do
             if entity.type == 'url' then
