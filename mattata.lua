@@ -498,9 +498,11 @@ function mattata:on_callback_query(message, callback_query)
         message = mattata.process_nicknames(message)
         callback_query = mattata.process_nicknames(callback_query)
     end
-    if not self.chats[tostring(message.chat.id)] then
-        self.chats[tostring(message.chat.id)] = message.chat
-        self.chats[tostring(message.chat.id)].disabled_plugins = redis:smembers('disabled_plugins:' .. message.chat.id) or {}
+    if message.chat and message.chat.id then
+        if not self.chats[tostring(message.chat.id)] then
+            self.chats[tostring(message.chat.id)] = message.chat
+            self.chats[tostring(message.chat.id)].disabled_plugins = redis:smembers('disabled_plugins:' .. message.chat.id) or {}
+        end
     end
     local language = require('languages.' .. mattata.get_user_language(callback_query.from.id))
     if message.chat.id and mattata.is_group(message) and mattata.get_setting(message.chat.id, 'force group language') then
