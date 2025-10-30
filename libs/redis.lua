@@ -31,29 +31,30 @@ redis.commands.hgetall = redis.command('hgetall', {
 if not configuration.redis then
     io.stderr:write('The redis table could not be found in configuration.lua!')
     return false
-elseif not configuration.redis.host then
-    io.stderr:write('Please specify the host address of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 127.0.0.1.')
-    return false
-elseif not configuration.redis.port then
-    io.stderr:write('Please specify the port of your redis database in the redis table of configuration.lua. Unless you have changed it, this will be 6379.')
-    return false
-elseif tonumber(configuration.redis.port) == nil then
-    io.stderr:write('The value of port in the redis table of configuration.lua must be numerical!')
-    return false
 end
 
-local success = pcall(function()
-    local params = {
-        ['host'] = configuration.redis.host,
-        ['port'] = configuration.redis.port
-    }
-    redis = redis.connect(params)
+local ok, conn = pcall(function()
+    if configuration.redis.socket and configuration.redis.socket ~= '' then
+        -- nrk/redis-lua supports { path = '/path/to/redis.sock' }
+        return redis.connect({ path = configuration.redis.socket })
+    else
+        if not configuration.redis.host then
+            io.stderr:write('Please specify redis.host (e.g. 127.0.0.1)')
+            return false
+        end
+        if not configuration.redis.port or tonumber(configuration.redis.port) == nil then
+            io.stderr:write('Please specify numeric redis.port (e.g. 6379)')
+            return false
+        end
+        return redis.connect({ host = configuration.redis.host, port = configuration.redis.port })
+    end
 end)
 
-if not success then
+if not ok or not conn then
     io.stderr:write('An error has occurred whilst connecting to redis!')
     return false
 end
+redis = conn
 
 if configuration.redis.db and configuration.redis.db ~= '' then
     if tonumber(configuration.redis.db) == nil then
